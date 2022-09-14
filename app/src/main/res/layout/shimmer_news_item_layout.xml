@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_margin="16dp"
+        android:background="@color/backgroundColor"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="120dp"
+            android:transitionName="imageTransition"
+            android:elevation="1dp"
+            app:strokeColor="@color/newsCardBackgroundColor"
+            app:strokeWidth="3dp"
+            android:src="@color/shimmer_color"
+            android:scaleType="centerCrop"
+            android:id="@+id/ivNewsImage"
+            app:shapeAppearance="@style/RoundedImageStyle"
+            android:layout_height="120dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:paddingStart="110dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/bottom_start_rounded_corner_shape"
+            android:layout_height="110dp">
+
+            <!--Headline-->
+            <View
+                android:id="@+id/tvNewsTitle"
+                android:transitionName="headingTransition"
+                tools:text="The odd philosphy icelanders live by"
+                android:layout_width="240dp"
+                android:maxLines="1"
+                android:background="@color/shimmer_color"
+                android:textColor="@color/headingTextColor"
+                android:textSize="14sp"
+                android:layout_height="18dp"/>
+
+            <!--Description-->
+            <View
+                android:layout_marginTop="4dp"
+                android:id="@+id/tvNewsDesc"
+                android:textSize="11sp"
+                android:layout_marginEnd="8dp"
+                tools:text="This is to report the loss of my bicycle that happened at afternoon at about 3 pm. I had kept my bicycle outside the bakery shop that and the bike was locked, i just picked up some bread and to my surprise."
+                android:layout_width="230dp"
+                android:maxLines="2"
+                android:background="@color/shimmer_color"
+                android:ellipsize="end"
+                android:textColor="@color/descriptionTextColor"
+                android:layout_height="22dp"/>
+
+            <RelativeLayout
+                android:layout_marginTop="8dp"
+                android:paddingEnd="8dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--Time Stamp-->
+                <View
+                    android:id="@+id/tvTimeStamp"
+                    android:layout_width="100dp"
+                    android:layout_height="10dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:ellipsize="end"
+                    android:background="@color/shimmer_color"
+                    android:maxLines="1"
+                    android:text="Tue May 22 2022"
+                    android:textColor="@color/descriptionTextColor"
+                    android:textSize="10sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingEnd="8dp"
+                android:orientation="horizontal">
+
+                <!--Comments Icon-->
+                <View
+                    android:id="@+id/btnComments"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/shimmer_color"
+                    android:src="@color/shimmer_color"
+                    app:tint="@color/orange" />
+
+                <!--Share Icon-->
+                <View
+                    android:id="@+id/btnShare"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toEndOf="@+id/btnComments"
+                    android:background="@color/shimmer_color"
+                    app:tint="@color/orange" />
+
+                <!--Is BookMarked Icon-->
+                <View
+                    android:id="@+id/btnBookMark"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/shimmer_color"
+                    app:tint="@color/orange" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+    </FrameLayout>
+</merge>

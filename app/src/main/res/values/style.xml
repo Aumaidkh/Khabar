@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Profile image style-->
+    <style name="CircleImageStyle" parent="">
+        <item name="cornerSize">50dp</item>
+    </style>
+
+    <style name="RoundImage" parent="">
+        <item name="cornerRadius">100dp</item>
+        <item name="cornerSize">50%</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
+    <!--News Item Rounded Image Style-->
+    <style name="RoundedImageStyle" parent="">
+        <item name="cornerSize">10dp</item>
+    </style>
+
+    <style name="RoundProfileImageStyle" parent="">
+        <item name="cornerSize">40%</item>
+    </style>
+
+
+    <!--Custom Card Appearance-->
+    <style name="BottomStartRoundedCornerCard" parent="">
+        <item name="cornerSizeBottomLeft">10dp</item>
+    </style>
+
+    <!--Tab Layout Style-->
+    <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/CustomTextAppearance</item>
+        <item name="tabIndicatorColor">@color/orange</item>
+        <item name="tabBackground">@color/backgroundColor</item>
+    </style>
+
+    <!--Text Appearance for Tab Layout-->
+    <style name="CustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/headingTextColor</item>
+        <item name="android:textSize">11sp</item>
+        <item name="rippleColor">@color/orange</item>
+    </style>
+
+</resources>

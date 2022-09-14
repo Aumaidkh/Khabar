@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginTop="8dp"
+    android:background="@color/light_gray_background_color"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="120dp"
+        android:elevation="1dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="3dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dp"
+        android:id="@+id/ivNewsImage"
+        app:shapeAppearance="@style/RoundedImageStyle"
+        android:layout_height="120dp"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:paddingStart="110dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/bottom_start_rounded_corner_shape"
+        android:layout_height="110dp">
+
+        <!--Headline-->
+        <TextView
+            android:id="@+id/tvNewsTitle"
+            android:text="The odd philosphy icelanders live by"
+            android:layout_width="wrap_content"
+            android:textColor="#DE000000"
+            android:textSize="14sp"
+            android:layout_height="wrap_content"/>
+
+        <!--Description-->
+        <TextView
+            android:layout_marginTop="4dp"
+            android:id="@+id/tvNewsDesc"
+            android:textSize="11sp"
+            android:layout_marginEnd="8dp"
+            android:text="This is to report the loss of my bicycle that happened at afternoon at about 3 pm. I had kept my bicycle outside the bakery shop that and the bike was locked, i just picked up some bread and to my surprise."
+            android:layout_width="wrap_content"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textColor="#66000000"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:layout_marginTop="8dp"
+            android:paddingEnd="8dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Time Stamp-->
+            <TextView
+                android:layout_alignParentStart="true"
+                android:id="@+id/tvTimeStamp"
+                android:textSize="10sp"
+                android:layout_centerVertical="true"
+                android:text="3 hours ago"
+                android:layout_width="wrap_content"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:textColor="#66000000"
+                android:layout_height="wrap_content"/>
+
+            <!--Is BookMarked Icon-->
+            <ImageButton
+                android:id="@+id/btnBookMark"
+                android:src="@drawable/ic_bookmark"
+                android:layout_width="wrap_content"
+                app:tint="@color/orange"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "942727235988",
+    "project_id": "khabar-df21c",
+    "storage_bucket": "khabar-df21c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942727235988:android:67c2415170c20faa77e781",
+        "android_client_info": {
+          "package_name": "com.snapp.khabar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942727235988-dp44jen9inhvaslh1l7btkucfnsn7445.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAje3g1lmKHmLtdsAUAOUZPPInUdpuCm3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942727235988-dp44jen9inhvaslh1l7btkucfnsn7445.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
