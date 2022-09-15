@@ -11,6 +11,7 @@ import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
 import com.snapp.khabar.feature_fetch_news.domain.model.UserModel
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.CheckIfUserIsAuthenticatedUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.SaveUserIntoFirestoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authenticateUserWithGoogleUseCase: AuthenticateUserWithGoogleUseCase,
-    private val saveUserIntoFirestoreUseCase: SaveUserIntoFirestoreUseCase
+    private val saveUserIntoFirestoreUseCase: SaveUserIntoFirestoreUseCase,
+    private val isUserAuthenticatedUseCase: CheckIfUserIsAuthenticatedUseCase
 ) : ViewModel() {
 
     /**
@@ -39,8 +41,18 @@ class LoginViewModel @Inject constructor(
 
     fun onEvent(event: LoginEvents) {
         when (event) {
+
+            /**
+             * Login in the user through google */
             is LoginEvents.Login -> {
                 signInWithGoogle(event.authCredential)
+            }
+
+            /**
+             * Checking if user is already logged in
+             * */
+            is LoginEvents.CheckIfUserIsAlreadyAuthenticated -> {
+                ifUserAlreadyAuthenticated()
             }
         }
     }
@@ -108,6 +120,48 @@ class LoginViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+
+    /**
+     * Checking if user is authenticated
+     * */
+    private fun ifUserAlreadyAuthenticated(){
+        viewModelScope.launch {
+            isUserAuthenticatedUseCase.invoke().onEach { result ->
+                when(result){
+                    is Result.Loading -> {
+                        _state.update {
+                            it.copy(isLoading = true, isAuthenticated = false)
+                        }
+                        Log.d(TAG, "ifUserAlreadyAuthenticated: Loading")
+                    }
+
+                    is Result.Success -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                isAuthenticated = result.data ?: false
+                            )
+                        }
+                        Log.d(TAG, "ifUserAlreadyAuthenticated: Success")
+                    }
+
+                    is Result.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                isAuthenticated = false
+                            )
+                        }
+
+                        Log.d(TAG, "ifUserAlreadyAuthenticated: Error")
+
+                        _eventFlow.emit(LoginUiEvents.ShowSnackBar(result.message.toString()))
+                    }
+                }
+            }.launchIn(this)
+        }
     }
 
 }

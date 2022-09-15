@@ -66,6 +66,11 @@ class LoginActivity : AppCompatActivity() {
 
         initSignInButton()
         initGoogleSignInClient()
+
+        /**
+         * Check if user is already logged in
+         * */
+        loginViewModel.onEvent(LoginEvents.CheckIfUserIsAlreadyAuthenticated)
     }
 
     private fun initSignInButton() {
@@ -128,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
                 } else if (!state.isAuthenticated){
                     Log.d(TAG, "consumeFlows: Not Authenticated")
                     binding.progressBar.visibility = View.GONE
-                } else {
+                } else if(state.isAuthenticated) {
                     Log.d(TAG, "consumeFlows: Authenticated")
                     binding.progressBar.visibility = View.GONE
                     Intent(this@LoginActivity,HomeActivity::class.java).also {

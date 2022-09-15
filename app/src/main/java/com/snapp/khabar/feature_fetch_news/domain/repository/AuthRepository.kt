@@ -8,4 +8,6 @@ import kotlinx.coroutines.flow.Flow
 interface AuthRepository {
 
     suspend fun authenticate(authCredential: AuthCredential): Flow<Result<UserDto>>
+
+    suspend fun isUserAuthenticated(): Flow<Result<Boolean>>
 }

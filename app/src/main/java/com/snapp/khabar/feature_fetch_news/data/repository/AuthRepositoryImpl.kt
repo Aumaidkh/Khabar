@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "AuthRepositoryImpl"
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
@@ -61,6 +62,30 @@ class AuthRepositoryImpl @Inject constructor(
                 .addOnFailureListener(onFailureListener)
 
             awaitClose()
+        }.distinctUntilChanged()
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override suspend fun isUserAuthenticated(): Flow<Result<Boolean>> {
+        return callbackFlow<Result<Boolean>> {
+            val authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+                if (firebaseAuth.currentUser != null){
+                    Log.d(TAG, "Authenticated")
+                    launch {
+                        send(Result.Success(true))
+                    }
+                } else {
+                    Log.d(TAG, "Not Authenticated")
+                    launch {
+                        send(Result.Error("No user found"))
+                    }
+                }
+            }
+
+            firebaseAuth.addAuthStateListener(authListener)
+            awaitClose{
+                firebaseAuth.removeAuthStateListener(authListener)
+            }
         }.distinctUntilChanged()
     }
 }
