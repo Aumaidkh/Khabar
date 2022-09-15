@@ -10,4 +10,6 @@ interface AuthRepository {
     suspend fun authenticate(authCredential: AuthCredential): Flow<Result<UserDto>>
 
     suspend fun isUserAuthenticated(): Flow<Result<Boolean>>
+
+    suspend fun signOut()
 }

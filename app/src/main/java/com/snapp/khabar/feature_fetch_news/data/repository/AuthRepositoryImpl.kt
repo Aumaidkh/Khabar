@@ -88,4 +88,8 @@ class AuthRepositoryImpl @Inject constructor(
             }
         }.distinctUntilChanged()
     }
+
+    override suspend fun signOut() {
+        firebaseAuth.signOut()
+    }
 }
