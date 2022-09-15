@@ -36,6 +36,11 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
+    <!--Create a new style and name it splashScreenTheme and add the following code-->
+    <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:statusBarColor">@color/backgroundColor</item>
+    </style>
 
 
 

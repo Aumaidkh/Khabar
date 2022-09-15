@@ -1,11 +1,12 @@
 package com.snapp.khabar.feature_fetch_news.di
 
+import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
 import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
+import com.snapp.khabar.feature_fetch_news.domain.repository.AuthRepository
 import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteCommentsRepository
 import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteNewsRepository
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.FetchAllCommentsForNews
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.FetchNewsFromFirebaseFirestoreUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.ValidateCommentUseCase
+import com.snapp.khabar.feature_fetch_news.domain.repository.UserRepository
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +16,25 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
+
+    @Provides
+    @Singleton
+    fun provideCheckIfUserIsAuthenticatedUseCase(repository: AuthRepository): CheckIfUserIsAuthenticatedUseCase {
+        return CheckIfUserIsAuthenticatedUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSaveUserToDatabaseUseCase(repository: UserRepository): SaveUserIntoFirestoreUseCase {
+        return SaveUserIntoFirestoreUseCase(repository)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideAuthenticateUserUseCase(repository: AuthRepository): AuthenticateUserWithGoogleUseCase {
+        return AuthenticateUserWithGoogleUseCase(repository)
+    }
 
 
     @Provides

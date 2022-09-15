@@ -28,5 +28,6 @@
     <color name="nightdescriptionTextColor">#ABFFFFFF</color>
     <color name="nighticonColor">#FF9100</color>
     <color name="shimmer_color">#E6E3E3</color>
+    <color name="secondary_text_color">#E0E0E0</color>
 
 </resources>
