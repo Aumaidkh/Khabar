@@ -1,5 +1,6 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.settings
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,10 +16,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.snapp.khabar.R
 import com.snapp.khabar.databinding.FragmentSettingsBinding
 import com.snapp.khabar.feature_fetch_news.presentation.ui.comment.CommentsActivity
 import com.snapp.khabar.feature_fetch_news.presentation.ui.edit_account.EditAccountActivity
+import com.snapp.khabar.feature_fetch_news.presentation.ui.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
@@ -56,11 +59,17 @@ class SettingsFragment : Fragment() {
     }
 
 
-    private fun setupClicks(){
+    private fun setupClicks() {
         binding.apply {
             // Back
             btnBack.setOnClickListener {
                 findNavController().navigateUp()
+            }
+
+            /**
+             * Logout Button*/
+            tvLogout.setOnClickListener {
+                showAreYouSureToLogOutDialog()
             }
 
             btnEditaccount.setOnClickListener {
@@ -79,14 +88,14 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun consumeFlows(){
+    private fun consumeFlows() {
         Log.d(TAG, "consumeFlows: ")
         /**
          * Observing state
          * */
         lifecycleScope.launchWhenStarted {
             settingsViewModel.state.collect { state ->
-                if (state.isLoading){
+                if (state.isLoading) {
                     // SHow Loading
                     Log.d(TAG, "consumeFlows: Loading")
                 } else {
@@ -95,8 +104,50 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
+
+        /**
+         * Observing events
+         * */
+        lifecycleScope.launchWhenStarted {
+            settingsViewModel.eventFlow.collect { event ->
+                when (event) {
+
+                    /**
+                     * User Logout*/
+                    is SettingsUiEvent.NavigateUserToLoginScreen -> {
+                        Intent(context, LoginActivity::class.java).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        }.also {
+                            startActivity(it)
+                        }
+                    }
+                }
+            }
+        }
     }
 
+
+    /**
+     * Shows a confirmation dialog for logging a user out
+     * */
+    private fun showAreYouSureToLogOutDialog() {
+        MaterialAlertDialogBuilder(requireContext()).apply {
+            setTitle(resources.getString(R.string.logout))
+            setMessage(resources.getString(R.string.are_you_sure_to))
+            setPositiveButton(resources.getString(R.string.yes)) { _, _ ->
+                settingsViewModel.onEvent(SettingsScreenEvent.SignOut)
+            }
+            setNegativeButton(resources.getString(R.string.no)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            show()
+        }
+    }
+
+
+    /**
+     * Update the widgets on Ui
+     * */
     private fun updateUi(state: SettingState) {
         binding.apply {
             /*Show Profile Pic*/

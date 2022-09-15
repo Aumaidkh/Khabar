@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
+import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -11,7 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val datastore: DatastoreManager
+    private val datastore: DatastoreManager,
+    private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
 
     /**
@@ -42,7 +44,7 @@ class SettingsViewModel @Inject constructor(
             }
 
             is SettingsScreenEvent.SignOut -> {
-
+                signOut()
             }
 
             is SettingsScreenEvent.EditProfile -> {
@@ -52,6 +54,13 @@ class SettingsViewModel @Inject constructor(
             is SettingsScreenEvent.InitScreenState -> {
                 setupScreenScreen()
             }
+        }
+    }
+
+    private fun signOut() {
+        viewModelScope.launch {
+            signOutUseCase.invoke()
+            _eventFlow.emit(SettingsUiEvent.NavigateUserToLoginScreen)
         }
     }
 

@@ -7,4 +7,5 @@ sealed class SettingsUiEvent{
     data class NavigateToEditProfileScreen(
         val userDto: UserDto
     ): SettingsUiEvent()
+    object NavigateUserToLoginScreen: SettingsUiEvent()
 }

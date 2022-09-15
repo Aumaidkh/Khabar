@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
         /**
          * Check if user is already logged in
          * */
-        loginViewModel.onEvent(LoginEvents.CheckIfUserIsAlreadyAuthenticated)
+       // loginViewModel.onEvent(LoginEvents.CheckIfUserIsAlreadyAuthenticated)
     }
 
     private fun initSignInButton() {
@@ -115,6 +115,7 @@ class LoginActivity : AppCompatActivity() {
             loginViewModel.eventFlow.collect{ event ->
                 when(event){
                     is LoginUiEvents.ShowSnackBar -> {
+                        Log.d(TAG, "consumeFlows: Show Snackbar")
                         Snackbar.make(binding.root,event.message,Snackbar.LENGTH_SHORT).show()
                     }
                 }

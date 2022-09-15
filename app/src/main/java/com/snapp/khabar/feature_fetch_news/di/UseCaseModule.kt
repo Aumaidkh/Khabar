@@ -1,6 +1,7 @@
 package com.snapp.khabar.feature_fetch_news.di
 
 import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
+import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
 import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.repository.AuthRepository
 import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteCommentsRepository
@@ -16,6 +17,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
+
+    @Provides
+    @Singleton
+    fun provideSignOutUseCase(repository: AuthRepository): SignOutUseCase {
+        return SignOutUseCase(repository)
+    }
 
     @Provides
     @Singleton
