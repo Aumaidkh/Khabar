@@ -1,10 +1,40 @@
 {
   "project_info": {
     "project_number": "942727235988",
+    "firebase_url": "https://khabar-df21c-default-rtdb.firebaseio.com",
     "project_id": "khabar-df21c",
     "storage_bucket": "khabar-df21c.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942727235988:android:fd31a2a2458aa2ee77e781",
+        "android_client_info": {
+          "package_name": "com.hopcape.khabar.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942727235988-dp44jen9inhvaslh1l7btkucfnsn7445.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAje3g1lmKHmLtdsAUAOUZPPInUdpuCm3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942727235988-dp44jen9inhvaslh1l7btkucfnsn7445.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:942727235988:android:67c2415170c20faa77e781",
@@ -13,6 +43,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "942727235988-2gh2f236eh9om4n3qj8t6m5ioruj4ptt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.snapp.khabar",
+            "certificate_hash": "9354d824a9c1bada9caf6dedf3c56cd8ccf5a2e6"
+          }
+        },
         {
           "client_id": "942727235988-dp44jen9inhvaslh1l7btkucfnsn7445.apps.googleusercontent.com",
           "client_type": 3

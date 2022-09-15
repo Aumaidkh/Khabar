@@ -21,4 +21,7 @@ object Constants {
     const val BUSINESS_CATEGORY = "Business"
     const val JOBS_CATEGORY = "Jobs"
 
+    // Firestore collections
+    const val USERS_COLLECTION = "user"
+
 }

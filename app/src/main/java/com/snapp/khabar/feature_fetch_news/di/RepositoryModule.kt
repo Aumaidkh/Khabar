@@ -1,10 +1,15 @@
 package com.snapp.khabar.feature_fetch_news.di
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.snapp.khabar.feature_fetch_news.data.repository.AuthRepositoryImpl
 import com.snapp.khabar.feature_fetch_news.data.repository.FirebaseFirestoreCommentsRepositoryImpl
 import com.snapp.khabar.feature_fetch_news.data.repository.FirebaseFirestoreRepositoryImpl
+import com.snapp.khabar.feature_fetch_news.data.repository.UserRepositoryImpl
+import com.snapp.khabar.feature_fetch_news.domain.repository.AuthRepository
 import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteCommentsRepository
 import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteNewsRepository
+import com.snapp.khabar.feature_fetch_news.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,5 +31,17 @@ object RepositoryModule {
     @Singleton
     fun providesRemoteCommentsRepository(firestore: FirebaseFirestore): RemoteCommentsRepository {
         return FirebaseFirestoreCommentsRepositoryImpl(firestore)
+    }
+
+    @Provides
+    @Singleton
+    fun providesUserRepository(firebaseAuth: FirebaseFirestore): UserRepository {
+        return UserRepositoryImpl(firebaseAuth)
+    }
+
+    @Provides
+    @Singleton
+    fun providesAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository {
+        return AuthRepositoryImpl(firebaseAuth)
     }
 }

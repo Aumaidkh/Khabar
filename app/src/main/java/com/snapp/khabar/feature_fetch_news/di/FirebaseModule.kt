@@ -1,5 +1,6 @@
 package com.snapp.khabar.feature_fetch_news.di
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -17,6 +18,11 @@ object FirebaseModule {
     fun providesFirebaseFirestoreInstance(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
     }
+
+    @Provides
+    @Singleton
+    fun providesProvidesFirebaseAuth() =
+        FirebaseAuth.getInstance()
 
 
 
