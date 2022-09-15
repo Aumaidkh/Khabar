@@ -5,5 +5,6 @@ sealed class SettingsScreenEvent {
     data class NotificationToggle(val enabled: Boolean): SettingsScreenEvent()
     object EditProfile: SettingsScreenEvent()
     object SignOut: SettingsScreenEvent()
+    object InitScreenState: SettingsScreenEvent()
 
 }

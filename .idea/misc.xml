@@ -3,19 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/drawable-v24/ic_splash.xml" value="0.165" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/drawable/ic_asset_1.xml" value="0.165" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/drawable/splash.xml" value="0.165" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/activity_comments_layout.xml" value="0.125" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/activity_home_layout.xml" value="0.25" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/activity_login.xml" value="0.136" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/activity_login_.xml" value="0.176" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/card_back_button.xml" value="0.12447916666666667" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/login.xml" value="0.264" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/logo.xml" value="0.125" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/snippet_facebook_button.xml" value="0.125" />
-        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/snippet_google_button.xml" value="0.125" />
+        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
       </map>
     </option>
   </component>

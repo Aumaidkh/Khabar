@@ -18,8 +18,8 @@ class DatastoreManager @Inject constructor(
         serializer = UserProfileSerializer(cryptoManager)
     )
 
-    suspend fun getProfileDetails() =
-        context.datastore.data.first()
+    fun getProfileDetails() =
+        context.datastore.data
 
 
     suspend fun saveUserInfo(userDto: UserDto){
