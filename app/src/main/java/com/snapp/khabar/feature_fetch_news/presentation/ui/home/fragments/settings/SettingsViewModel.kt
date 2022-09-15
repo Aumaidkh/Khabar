@@ -49,12 +49,20 @@ class SettingsViewModel @Inject constructor(
             }
 
             is SettingsScreenEvent.EditProfile -> {
-
+                navigateToEditProfileScreen()
             }
 
             is SettingsScreenEvent.InitScreenState -> {
                 setupScreenScreen()
             }
+        }
+    }
+
+    private fun navigateToEditProfileScreen() {
+        viewModelScope.launch {
+            _eventFlow.emit(SettingsUiEvent.NavigateToEditProfileScreen(
+                _state.value.toUserDto()
+            ))
         }
     }
 

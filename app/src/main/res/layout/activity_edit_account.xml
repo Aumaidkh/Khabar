@@ -1,121 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroundColor">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:background="@color/backgroundColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_keyboard_arrow_left"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/iconColor" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/editProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Edit Profile"
-            android:textColor="@color/iconColor"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/backgroundColor"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/editProfile"
-            android:src="@drawable/ic_tick_svgrepo_com"
-            android:background="@android:color/transparent"/>
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.appbar.AppBarLayout>
 
+                <!--Toolbar-->
+                <RelativeLayout
+                    android:id="@+id/toolbarlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent">
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent">
+                    <include
+                        android:id="@+id/btnBack"
+                        layout="@layout/card_back_button" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profileImage"
-            android:layout_width="104dp"
-            android:layout_height="104dp"
-            android:padding="2dp"
-            android:layout_gravity="center"
-            android:src="@drawable/dp"
-            app:shapeAppearance="@style/RoundImage"
-            app:strokeColor="@color/orange"
-            app:strokeWidth="1dp" />
-
-        <!--Camera Icon-->
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_gravity="end|bottom"
-            android:layout_width="wrap_content"
-            android:padding="2dp"
-            android:background="@android:color/transparent"
-            app:shapeAppearance="@style/RoundImage"
-            android:src="@drawable/ic_camera_svg"
-            app:strokeColor="@color/orange"
-            app:strokeWidth="1dp"
-            app:tint="@color/iconColor"
-            android:layout_margin="15dp"
-            android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Edit Profile"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/bold_heading1" />
 
 
-    </FrameLayout>
+                </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="Name"
-        android:textColor="@color/headingTextColor"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frameLayout" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name">
+                <!--Buttons-->
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:weightSum="2"
+                    app:layout_constraintTop_toBottomOf="@id/toolbarlayout"
+                    tools:layout_editor_absoluteX="24dp">
 
 
-    </TextView>
+                    <!--Doctor Image-->
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center_horizontal"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dp"
+                        app:shapeAppearance="@style/CircleImage"
+                        app:strokeColor="@color/white"
+                        app:strokeWidth="3dp" />
+
+                    <!--Line-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:background="#11838383" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <!--Email-->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Full Name"
+                            android:textColor="#61000000"
+                            android:textSize="16sp" />
+
+                        <!--Email Field-->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:theme="@style/CustomEditTextTheme"
+                            app:boxBackgroundColor="@color/white"
+                            app:boxStrokeColor="@color/orange"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="1dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/poppins"
+                                android:hint="Enter your name"
+                                android:inputType="textEmailAddress"
+                                android:text="Murtaza Khursheed"
+                                android:textColorHint="@color/secondary_text_color" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!--Gender-->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Gender"
+                            android:textColor="#4D000000"
+                            android:textSize="16sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/btnMale"
+                                android:layout_width="0dp"
+                                android:layout_height="65dp"
+                                android:layout_margin="8dp"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="true"
+                                app:cardBackgroundColor="@color/white">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="20dp"
+                                    android:src="@drawable/male"
+                                    app:tint="@color/orange" />
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/btnFemale"
+                                android:layout_width="0dp"
+                                android:layout_height="65dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:layout_margin="8dp"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="@color/white">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="17dp"
+                                    android:src="@drawable/femenine"
+                                    app:tint="@color/orange" />
+
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
+
+                        <!--Email-->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="E-mail"
+                            android:textColor="#61000000"
+                            android:textSize="16sp" />
+
+                        <!--Email Field-->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:theme="@style/CustomEditTextTheme"
+                            app:boxBackgroundColor="@color/white"
+                            app:boxStrokeColor="@color/orange"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="1dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Enter your email"
+                                android:inputType="textEmailAddress"
+                                android:text="helloaumaid@gmail.com"
+                                android:textColorHint="@color/secondary_text_color" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Phone"
+                            android:textColor="#4D000000"
+                            android:textSize="16sp" />
+
+                        <!--Phone Field-->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:theme="@style/CustomEditTextTheme"
+                            app:boxBackgroundColor="@color/white"
+                            app:boxStrokeColor="@color/orange"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="1dp"
+                            app:endIconTint="@color/material_on_background_disabled">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPhone"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/poppins_medium"
+                                android:hint="Enter your phone"
+                                android:inputType="phone"
+                                android:text="+7889534384"
+                                android:textColorHint="@color/secondary_text_color" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <!--Gender-->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Date of Birth"
+                            android:textColor="#4D000000"
+                            android:textSize="16sp" />
+
+                        <!--Phone Field-->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:theme="@style/CustomEditTextTheme"
+                            app:boxBackgroundColor="@color/white"
+                            app:boxStrokeColor="@color/orange"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="1dp"
+                            app:endIconTint="@color/material_on_background_disabled">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etDateOfBirth"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/poppins_medium"
+                                android:hint="Enter your phone"
+                                android:inputType="datetime"
+                                android:text="03 Aug, 1997"
+                                android:textColorHint="@color/secondary_text_color" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSaveChanges"
+                        app:layout_anchorGravity="bottom"
+                        android:layout_width="match_parent"
+                        style="@style/CustomButtonStyle"
+                        android:layout_marginTop="24dp"
+                        android:text="Save Changes"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </LinearLayout>
 
 
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</layout>

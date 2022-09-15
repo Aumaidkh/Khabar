@@ -72,8 +72,8 @@ class SettingsFragment : Fragment() {
                 showAreYouSureToLogOutDialog()
             }
 
-            btnEditaccount.setOnClickListener {
-                findNavController().navigate(R.id.action_settings_to_editAccountActivity)
+            editProfile.setOnClickListener {
+                settingsViewModel.onEvent(SettingsScreenEvent.EditProfile)
             }
 
             switch1.setOnCheckedChangeListener { _, isEnabled ->
@@ -111,7 +111,6 @@ class SettingsFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             settingsViewModel.eventFlow.collect { event ->
                 when (event) {
-
                     /**
                      * User Logout*/
                     is SettingsUiEvent.NavigateUserToLoginScreen -> {
@@ -120,6 +119,13 @@ class SettingsFragment : Fragment() {
                         }.also {
                             startActivity(it)
                         }
+                    }
+
+                    /**
+                     * Navigate User To Edit Profile
+                     * */
+                    is SettingsUiEvent.NavigateToEditProfileScreen -> {
+                        findNavController().navigate(R.id.action_settings_to_editAccountActivity)
                     }
                 }
             }
@@ -153,6 +159,8 @@ class SettingsFragment : Fragment() {
             /*Show Profile Pic*/
             Glide.with(this@SettingsFragment)
                 .load(state.imageUrl)
+                .placeholder(R.drawable.dp)
+                .error(R.drawable.dp)
                 .into(ivProfilePic)
 
             tvName.text = state.username

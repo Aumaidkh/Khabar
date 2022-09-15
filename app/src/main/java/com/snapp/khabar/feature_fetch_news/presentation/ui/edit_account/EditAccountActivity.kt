@@ -5,17 +5,53 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.snapp.khabar.R
+import com.snapp.khabar.databinding.ActivityEditAccountBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class EditAccountActivity: AppCompatActivity() {
+
+    /**
+     * DataBinding Vars
+     * */
+    private var _binding: ActivityEditAccountBinding? = null
+    private val binding get() = _binding!!
+
+
+    /**
+     * ViewModels
+     * */
+
+
+    /**
+     * Other Vars
+     * */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_account)
+        _binding = DataBindingUtil.setContentView(this,R.layout.activity_edit_account)
 
-        val backButton = findViewById<View>(R.id.btnBack) as ImageButton
-        backButton.setOnClickListener { finish() }
+        setupClicks()
+    }
+
+    private fun setupClicks() {
+        binding.apply {
+            btnBack.setOnClickListener{
+                finish()
+            }
+
+            btnSaveChanges.setOnClickListener {
+
+            }
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }
