@@ -1,5 +1,6 @@
 package com.snapp.khabar.feature_fetch_news.di
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.snapp.khabar.feature_fetch_news.data.repository.AuthRepositoryImpl
@@ -41,7 +42,10 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository {
-        return AuthRepositoryImpl(firebaseAuth)
+    fun providesAuthRepository(
+        firebaseAuth: FirebaseAuth,
+        googleSignInClient: GoogleSignInClient
+    ): AuthRepository {
+        return AuthRepositoryImpl(firebaseAuth, googleSignInClient)
     }
 }

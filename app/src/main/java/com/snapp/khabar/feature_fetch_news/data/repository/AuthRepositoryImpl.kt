@@ -1,6 +1,7 @@
 package com.snapp.khabar.feature_fetch_news.data.repository
 
 import android.util.Log
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 private const val TAG = "AuthRepositoryImpl"
 class AuthRepositoryImpl @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val googleSignInClient: GoogleSignInClient
 ) : AuthRepository {
 
 
@@ -90,6 +92,8 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun signOut() {
+        googleSignInClient.signOut()
+        googleSignInClient.revokeAccess()
         firebaseAuth.signOut()
     }
 }

@@ -3,6 +3,7 @@ package com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.setti
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -70,10 +71,10 @@ class SettingsViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        username = userDto.name?:"No Name",
-                        email = userDto.email?:"abc@gmail.com",
-                        imageUrl = userDto.photoUrl?:"www.google.com",
-                        userId = userDto.uid?:"aafafa"
+                        username = userDto.name ?: "No Name",
+                        email = userDto.email ?: "abc@gmail.com",
+                        imageUrl = userDto.photoUrl ?: "www.google.com",
+                        userId = userDto.uid ?: "aafafa"
                     )
                 }
                 Log.d(TAG, "User DTO: $userDto")
