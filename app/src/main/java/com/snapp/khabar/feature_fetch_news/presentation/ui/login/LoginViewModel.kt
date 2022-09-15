@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
@@ -23,7 +24,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val authenticateUserWithGoogleUseCase: AuthenticateUserWithGoogleUseCase,
     private val saveUserIntoFirestoreUseCase: SaveUserIntoFirestoreUseCase,
-    private val isUserAuthenticatedUseCase: CheckIfUserIsAuthenticatedUseCase
+    private val isUserAuthenticatedUseCase: CheckIfUserIsAuthenticatedUseCase,
+    private val datastoreManager: DatastoreManager
 ) : ViewModel() {
 
     /**
@@ -84,12 +86,22 @@ class LoginViewModel @Inject constructor(
                             it.copy(isLoading = false, isAuthenticated = true)
                         }
                         saveUserToFirestore(result.data!!)
+                        saveUserToDataStore(result.data)
 
                     }
                 }
             }.launchIn(this)
         }
     }
+
+    /**
+     * Saving User Data to the local datastore*/
+    private fun saveUserToDataStore(data: UserDto) {
+        viewModelScope.launch {
+            datastoreManager.saveUserInfo(userDto = data)
+        }
+    }
+
 
     /**
      * Saves the user to the fire store

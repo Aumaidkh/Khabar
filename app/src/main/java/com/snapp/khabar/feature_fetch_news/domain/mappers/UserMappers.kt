@@ -5,7 +5,7 @@ import com.snapp.khabar.feature_fetch_news.domain.model.UserModel
 
 fun UserDto.toUserModel() =
     UserModel(
-        userId = uid,
+        userId = uid!!,
         email = email,
         name = name,
         photoUrl = photoUrl,

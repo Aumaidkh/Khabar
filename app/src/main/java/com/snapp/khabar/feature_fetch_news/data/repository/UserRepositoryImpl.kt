@@ -39,7 +39,7 @@ class UserRepositoryImpl @Inject constructor(
 
             firestore
                 .collection(USERS_COLLECTION)
-                .document(userDto.uid)
+                .document(userDto.uid!!)
                 .set(userDto)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener)
