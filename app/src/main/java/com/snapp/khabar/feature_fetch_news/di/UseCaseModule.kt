@@ -1,5 +1,6 @@
 package com.snapp.khabar.feature_fetch_news.di
 
+import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
 import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
 import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
@@ -8,7 +9,9 @@ import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteCommentsRepos
 import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteNewsRepository
 import com.snapp.khabar.feature_fetch_news.domain.repository.UserRepository
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.*
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidateCommentUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.SaveUserIntoFirestoreUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.UpdateUserUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +21,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
+
+    @Provides
+    @Singleton
+    fun provideUpdateUserUseCase(
+        repository: UserRepository,
+        datastoreManager: DatastoreManager
+    ): UpdateUserUseCase {
+        return UpdateUserUseCase(repository, datastoreManager)
+    }
 
     @Provides
     @Singleton

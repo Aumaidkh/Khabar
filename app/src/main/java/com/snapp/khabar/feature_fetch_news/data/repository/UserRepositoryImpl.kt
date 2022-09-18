@@ -2,7 +2,10 @@ package com.snapp.khabar.feature_fetch_news.data.repository
 
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.OnProgressListener
+import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.util.Constants.USERS_COLLECTION
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
@@ -16,7 +19,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val datastoreManager: DatastoreManager
 ) : UserRepository {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -50,12 +54,75 @@ class UserRepositoryImpl @Inject constructor(
         }.distinctUntilChanged()
     }
 
-    override suspend fun getUserInfo(userId: String): UserDto? {
-        return null
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override suspend fun getUserInfo(userId: String): Flow<UserDto?> {
+        return callbackFlow {
+            val onSuccess = OnSuccessListener<DocumentSnapshot> { result ->
+                launch {
+                    val user = UserDto(
+                        uid = result.getString("uid"),
+                        name = result.getString("name"),
+                        email = result.getString("email"),
+                        photoUrl = result.getString("photoUrl"),
+                        phoneNumber = result.getString("phoneNumber")
+                    )
+                    send(user)
+
+                    /**
+                     * Making Sure we are updating data store after getting the latest data
+                     * */
+                    datastoreManager.saveUserInfo(user)
+                }
+            }
+
+            val onFailure = OnFailureListener { exception ->
+                launch {
+                    send(null)
+                }
+            }
+
+            firestore
+                .collection(USERS_COLLECTION)
+                .document(userId)
+                .get()
+                .addOnSuccessListener(onSuccess)
+                .addOnFailureListener(onFailure)
+
+            awaitClose()
+        }.distinctUntilChanged()
     }
 
-    override suspend fun updateUserInfo(userId: String): UserDto? {
-        return null
+    override suspend fun updateUserInfo(userId: String, userDto: UserDto): Flow<UserResult> {
+        return callbackFlow {
+            val onSuccess = OnSuccessListener<Void>{ result ->
+                launch {
+                    send(
+                        UserResult.Complete.Success
+                    )
+                }
+            }
+
+
+            val onFailure = OnFailureListener {
+                launch {
+                    send(
+                        UserResult.Complete.Failed(it.message.toString())
+                    )
+                }
+            }
+
+            firestore
+                .collection(USERS_COLLECTION)
+                .document(userId)
+                .set(userDto)
+                .addOnSuccessListener(onSuccess)
+                .addOnFailureListener(onFailure)
+
+            /**
+             * Updating the datastore preferences as well
+             * */
+            datastoreManager.saveUserInfo(userDto)
+        }
     }
 
 

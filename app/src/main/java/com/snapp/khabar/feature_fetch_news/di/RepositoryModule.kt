@@ -3,6 +3,7 @@ package com.snapp.khabar.feature_fetch_news.di
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.repository.AuthRepositoryImpl
 import com.snapp.khabar.feature_fetch_news.data.repository.FirebaseFirestoreCommentsRepositoryImpl
 import com.snapp.khabar.feature_fetch_news.data.repository.FirebaseFirestoreRepositoryImpl
@@ -36,8 +37,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesUserRepository(firebaseAuth: FirebaseFirestore): UserRepository {
-        return UserRepositoryImpl(firebaseAuth)
+    fun providesUserRepository(
+        firebaseAuth: FirebaseFirestore,
+        datastoreManager: DatastoreManager
+    ): UserRepository {
+        return UserRepositoryImpl(firebaseAuth, datastoreManager)
     }
 
     @Provides

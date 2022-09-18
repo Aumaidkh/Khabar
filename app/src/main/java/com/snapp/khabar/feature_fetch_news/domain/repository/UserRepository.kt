@@ -9,7 +9,7 @@ interface UserRepository {
 
     suspend fun createUser(userDto: UserDto): Flow<UserResult>
 
-    suspend fun getUserInfo(userId: String): UserDto?
+    suspend fun getUserInfo(userId: String): Flow<UserDto?>
 
-    suspend fun updateUserInfo(userId: String): UserDto?
+    suspend fun updateUserInfo(userId: String, userDto: UserDto): Flow<UserResult>
 }

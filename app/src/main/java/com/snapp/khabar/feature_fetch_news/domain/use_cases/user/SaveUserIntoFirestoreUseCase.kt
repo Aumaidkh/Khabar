@@ -1,4 +1,4 @@
-package com.snapp.khabar.feature_fetch_news.domain.use_cases
+package com.snapp.khabar.feature_fetch_news.domain.use_cases.user
 
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult

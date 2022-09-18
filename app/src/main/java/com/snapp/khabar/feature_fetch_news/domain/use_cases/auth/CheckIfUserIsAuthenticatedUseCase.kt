@@ -1,4 +1,4 @@
-package com.snapp.khabar.feature_fetch_news.domain.use_cases
+package com.snapp.khabar.feature_fetch_news.domain.use_cases.auth
 
 import com.snapp.khabar.feature_fetch_news.domain.repository.AuthRepository
 import javax.inject.Inject

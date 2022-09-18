@@ -3,6 +3,7 @@ package com.snapp.khabar.feature_fetch_news.presentation.ui.edit_account
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.UpdateUserUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidationUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -13,7 +14,8 @@ private const val TAG = "ProfileViewModel"
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val validationUseCases: ValidationUseCases
+    private val validationUseCases: ValidationUseCases,
+    private val updateUserUseCase: UpdateUserUseCase
 ): ViewModel() {
 
     /**
@@ -105,10 +107,9 @@ class ProfileViewModel @Inject constructor(
         updateProfile()
     }
 
-
     private fun updateProfile(){
         viewModelScope.launch {
-
+            updateUserUseCase.execute(_state.value.toUserDto())
         }
     }
 
