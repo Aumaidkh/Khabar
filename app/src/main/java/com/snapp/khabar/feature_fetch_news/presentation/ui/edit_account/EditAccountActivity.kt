@@ -1,15 +1,20 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.edit_account
 
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.snapp.khabar.R
 import com.snapp.khabar.databinding.ActivityEditAccountBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +38,23 @@ class EditAccountActivity: AppCompatActivity() {
     /**
      * Other Vars
      * */
+    /**
+     * Photo Activity on Result
+     * */
+    private var photoIntentResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // There are no request codes
+            val data: Intent? = result.data
+            profileViewModel.onEvent(EditProfileEvents.OnProfilePicChanged(data?.data.toString().toUri()))
+            showPreviewOnImageView(data?.data.toString())
+        }
+    }
 
+    private fun showPreviewOnImageView(uri: String) {
+        Glide.with(this)
+            .load(uri)
+            .into(binding.ivProfilePic)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,16 +134,32 @@ class EditAccountActivity: AppCompatActivity() {
 
     private fun setupClicks() {
         binding.apply {
+            // Back Button
             btnBack.setOnClickListener{
                 finish()
             }
 
+            // Save Changes Button
             btnSaveChanges.setOnClickListener {
                 profileViewModel.onEvent(EditProfileEvents.SaveChanges)
+            }
+
+            // Change Profile Pic Button
+            ivProfilePic.setOnClickListener {
+                openPhotoPicker()
             }
         }
     }
 
+
+    private fun openPhotoPicker(){
+        Intent().apply {
+            type = "image/*"
+            action = Intent.ACTION_GET_CONTENT
+        }.also {
+            photoIntentResultLauncher.launch(it)
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
