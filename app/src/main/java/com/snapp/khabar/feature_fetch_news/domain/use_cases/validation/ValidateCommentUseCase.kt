@@ -1,4 +1,4 @@
-package com.snapp.khabar.feature_fetch_news.domain.use_cases
+package com.snapp.khabar.feature_fetch_news.domain.use_cases.validation
 
 import com.snapp.khabar.feature_fetch_news.domain.util.ValidationResult
 

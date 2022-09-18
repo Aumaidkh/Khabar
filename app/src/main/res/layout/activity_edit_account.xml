@@ -119,11 +119,11 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:layout_width="match_parent"
+                                android:id="@+id/etName"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/poppins"
                                 android:hint="Enter your name"
                                 android:inputType="textEmailAddress"
-                                android:text="Murtaza Khursheed"
                                 android:textColorHint="@color/secondary_text_color" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -150,6 +150,7 @@
                                 android:layout_height="65dp"
                                 android:layout_margin="8dp"
                                 android:layout_weight="1"
+                                app:strokeColor="@color/orange"
                                 android:clickable="true"
                                 android:focusable="true"
                                 app:cardBackgroundColor="@color/white">
@@ -168,6 +169,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="65dp"
                                 android:clickable="true"
+                                app:strokeColor="@color/orange"
                                 android:focusable="true"
                                 android:layout_margin="8dp"
                                 android:layout_weight="1"
@@ -210,9 +212,9 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:id="@+id/etEmail"
                                 android:hint="Enter your email"
                                 android:inputType="textEmailAddress"
-                                android:text="helloaumaid@gmail.com"
                                 android:textColorHint="@color/secondary_text_color" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -246,43 +248,6 @@
                                 android:fontFamily="@font/poppins_medium"
                                 android:hint="Enter your phone"
                                 android:inputType="phone"
-                                android:text="+7889534384"
-                                android:textColorHint="@color/secondary_text_color" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-
-                        <!--Gender-->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/poppins_medium"
-                            android:text="Date of Birth"
-                            android:textColor="#4D000000"
-                            android:textSize="16sp" />
-
-                        <!--Phone Field-->
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:theme="@style/CustomEditTextTheme"
-                            app:boxBackgroundColor="@color/white"
-                            app:boxStrokeColor="@color/orange"
-                            app:boxStrokeWidth="0dp"
-                            app:boxStrokeWidthFocused="1dp"
-                            app:endIconTint="@color/material_on_background_disabled">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etDateOfBirth"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="@font/poppins_medium"
-                                android:hint="Enter your phone"
-                                android:inputType="datetime"
-                                android:text="03 Aug, 1997"
                                 android:textColorHint="@color/secondary_text_color" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -297,6 +262,7 @@
                         style="@style/CustomButtonStyle"
                         android:layout_marginTop="24dp"
                         android:text="Save Changes"
+                        android:layout_marginBottom="24dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />

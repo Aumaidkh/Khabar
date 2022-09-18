@@ -8,6 +8,7 @@ import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteCommentsRepos
 import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteNewsRepository
 import com.snapp.khabar.feature_fetch_news.domain.repository.UserRepository
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.*
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidateCommentUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,12 +61,6 @@ object UseCaseModule {
     @Singleton
     fun provideSubmitCommentUseCase(repository: RemoteCommentsRepository): SubmitCommentUseCase {
         return SubmitCommentUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideValidateCommentUseCase(): ValidateCommentUseCase {
-        return ValidateCommentUseCase()
     }
 
 }

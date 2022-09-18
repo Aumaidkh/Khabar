@@ -2,12 +2,11 @@ package com.snapp.khabar.feature_fetch_news.presentation.ui.comment
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.model.CommentModel
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.FetchAllCommentsForNews
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.ValidateCommentUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidateCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.util.Result
 import com.snapp.khabar.feature_fetch_news.presentation.ui.comment.adapters.CommentsScreenEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
