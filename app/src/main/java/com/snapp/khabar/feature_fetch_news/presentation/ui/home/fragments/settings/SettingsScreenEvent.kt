@@ -6,5 +6,8 @@ sealed class SettingsScreenEvent {
     object EditProfile: SettingsScreenEvent()
     object SignOut: SettingsScreenEvent()
     object InitScreenState: SettingsScreenEvent()
+    object PrivacyPolicyClickEvent: SettingsScreenEvent()
+    object EmailClickEvent: SettingsScreenEvent()
+    object PhoneNumberClickEvent: SettingsScreenEvent()
 
 }

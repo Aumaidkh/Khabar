@@ -1,12 +1,14 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.settings
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -67,8 +69,30 @@ class SettingsFragment : Fragment() {
                 showAreYouSureToLogOutDialog()
             }
 
+
+            /**
+             * Edit Profile Click*/
             editProfile.setOnClickListener {
                 settingsViewModel.onEvent(SettingsScreenEvent.EditProfile)
+            }
+
+
+            /**
+             * Privacy Policy Click*/
+            privacyPolicy.setOnClickListener {
+                settingsViewModel.onEvent(SettingsScreenEvent.PrivacyPolicyClickEvent)
+            }
+
+            /**
+             * Email Click*/
+            eMail.setOnClickListener {
+                settingsViewModel.onEvent(SettingsScreenEvent.EmailClickEvent)
+            }
+
+            /**
+             * Phone Click*/
+            mobile.setOnClickListener {
+                settingsViewModel.onEvent(SettingsScreenEvent.PhoneNumberClickEvent)
             }
 
             switch1.setOnCheckedChangeListener { _, isEnabled ->
@@ -123,8 +147,62 @@ class SettingsFragment : Fragment() {
                         Log.d(TAG, "Navigating to Edit Profile Screen")
                         findNavController().navigate(R.id.action_settings_to_editAccountActivity)
                     }
+
+
+                    /**
+                     * Privacy Policy Event*/
+                    is SettingsUiEvent.PrivacyPolicyEvent -> {
+                        openPrivacyPolicyLinkInBrowser(event.url)
+                    }
+
+                    /**
+                     * Handle Email Click*/
+                    is SettingsUiEvent.EmailEvent -> {
+                        openEmailIntent(event.email)
+                    }
+                    /**
+                     * Handle Phone Click*/
+                    is SettingsUiEvent.PhoneEvent -> {
+                        openPhoneIntent(event.phone)
+                    }
                 }
             }
+        }
+    }
+
+
+    /**
+     * Opens Up Email Intent With Prefilled email address
+     * @param email*/
+    private fun openEmailIntent(email: String){
+        Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:$email")
+        }.also {
+            startActivity(Intent.createChooser(it,"Select Email"))
+        }
+    }
+
+
+    /**
+     * Opens up dialer intent with prefilled phone number
+     * @param phone*/
+    private fun openPhoneIntent(phone: String){
+        Intent(Intent.ACTION_DIAL).apply {
+            data = "tel:$phone".toUri()
+        }.also {
+            startActivity(it)
+        }
+    }
+
+
+    /**
+     * Opens Up Privacy Policy Url in New Browser Window
+     * */
+    private fun openPrivacyPolicyLinkInBrowser(link: String) {
+        Intent(Intent.ACTION_VIEW).apply {
+            data = link.toUri()
+        }.also {
+            startActivity(it)
         }
     }
 

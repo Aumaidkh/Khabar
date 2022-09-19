@@ -54,6 +54,40 @@ class SettingsViewModel @Inject constructor(
             is SettingsScreenEvent.InitScreenState -> {
                 setupScreenScreen()
             }
+
+            is SettingsScreenEvent.PrivacyPolicyClickEvent -> {
+                handlePrivacyPolicyClick()
+            }
+
+            is SettingsScreenEvent.EmailClickEvent -> {
+                handleEmailClick()
+            }
+
+            is SettingsScreenEvent.PhoneNumberClickEvent -> {
+                handlePhoneNumberClick()
+            }
+        }
+    }
+
+    private fun handlePhoneNumberClick(){
+        viewModelScope.launch {
+            _eventChannel.send(
+                SettingsUiEvent.PhoneEvent()
+            )
+        }
+    }
+
+    private fun handleEmailClick(){
+        viewModelScope.launch {
+            _eventChannel.send(
+                SettingsUiEvent.EmailEvent()
+            )
+        }
+    }
+
+    private fun handlePrivacyPolicyClick(){
+        viewModelScope.launch {
+            _eventChannel.send(SettingsUiEvent.PrivacyPolicyEvent())
         }
     }
 
