@@ -3,15 +3,10 @@ package com.snapp.khabar.feature_fetch_news.di
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.StorageReference
 import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
-import com.snapp.khabar.feature_fetch_news.data.repository.AuthRepositoryImpl
-import com.snapp.khabar.feature_fetch_news.data.repository.FirebaseFirestoreCommentsRepositoryImpl
-import com.snapp.khabar.feature_fetch_news.data.repository.FirebaseFirestoreRepositoryImpl
-import com.snapp.khabar.feature_fetch_news.data.repository.UserRepositoryImpl
-import com.snapp.khabar.feature_fetch_news.domain.repository.AuthRepository
-import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteCommentsRepository
-import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteNewsRepository
-import com.snapp.khabar.feature_fetch_news.domain.repository.UserRepository
+import com.snapp.khabar.feature_fetch_news.data.repository.*
+import com.snapp.khabar.feature_fetch_news.domain.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,5 +46,16 @@ object RepositoryModule {
         googleSignInClient: GoogleSignInClient
     ): AuthRepository {
         return AuthRepositoryImpl(firebaseAuth, googleSignInClient)
+    }
+
+    /**
+     * Provide Photo repository here
+     * */
+    @Provides
+    @Singleton
+    fun providePhotoRepository(
+        storageReference: StorageReference
+    ): PhotoRepository {
+        return PhotoRepositoryImpl(storageReference)
     }
 }

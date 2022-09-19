@@ -1,30 +1,25 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.settings
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.Switch
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.snapp.khabar.R
 import com.snapp.khabar.databinding.FragmentSettingsBinding
-import com.snapp.khabar.feature_fetch_news.presentation.ui.comment.CommentsActivity
-import com.snapp.khabar.feature_fetch_news.presentation.ui.edit_account.EditAccountActivity
 import com.snapp.khabar.feature_fetch_news.presentation.ui.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
@@ -38,13 +33,13 @@ class SettingsFragment : Fragment() {
     /**
      * ViewModels
      * */
-    private val settingsViewModel: SettingsViewModel by activityViewModels()
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = DataBindingUtil.inflate(
             inflater,

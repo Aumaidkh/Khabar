@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,13 +16,16 @@ import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.snapp.khabar.R
 import com.snapp.khabar.databinding.ActivityEditAccountBinding
+import com.snapp.khabar.feature_fetch_news.presentation.ui.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
+private const val TAG = "EditAccountActivity"
 @AndroidEntryPoint
-class EditAccountActivity: AppCompatActivity() {
+class EditAccountActivity : AppCompatActivity() {
 
     /**
      * DataBinding Vars
@@ -41,14 +45,19 @@ class EditAccountActivity: AppCompatActivity() {
     /**
      * Photo Activity on Result
      * */
-    private var photoIntentResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            // There are no request codes
-            val data: Intent? = result.data
-            profileViewModel.onEvent(EditProfileEvents.OnProfilePicChanged(data?.data.toString().toUri()))
-            showPreviewOnImageView(data?.data.toString())
+    private var photoIntentResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                val data: Intent? = result.data
+                profileViewModel.onEvent(
+                    EditProfileEvents.OnProfilePicChanged(
+                        data?.data.toString().toUri()
+                    )
+                )
+                showPreviewOnImageView(data?.data.toString())
+            }
         }
-    }
 
     private fun showPreviewOnImageView(uri: String) {
         Glide.with(this)
@@ -59,7 +68,7 @@ class EditAccountActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this,R.layout.activity_edit_account)
+        _binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_account)
 
         setupClicks()
 
@@ -67,21 +76,95 @@ class EditAccountActivity: AppCompatActivity() {
 
         setUpInputFields()
 
+
+
     }
 
-    private fun consumeFlows(){
+    override fun onResume() {
+        super.onResume()
+        profileViewModel.onEvent(EditProfileEvents.PrePopulateInputFields)
+        Log.d(TAG, "onResume: ")
+    }
+
+    private fun consumeFlows() {
         // Collecting State
         lifecycleScope.launchWhenStarted {
+            /**
+             * Collecting State
+             * */
             profileViewModel.state.collect { _state ->
                 showErrorsIfAny(_state)
                 showSelectedGenderButton(_state)
             }
         }
+
+        lifecycleScope.launchWhenStarted {
+            /**
+             * Collecting Ui Events
+             * */
+            profileViewModel.eventFlow.collect { event ->
+                when (event) {
+                    is EditProfileEvents.UiEvents.ShowSnackBar -> {
+                        Snackbar.make(
+                            binding.root,
+                            event.message,
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    is EditProfileEvents.UiEvents.ProfileUpdated -> {
+                        finish()
+                    }
+
+                    is EditProfileEvents.UiEvents.ShowToast -> {
+                        Toast.makeText(
+                            this@EditAccountActivity,
+                            event.message,
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+
+                    is EditProfileEvents.UiEvents.PrepopulateInputs -> {
+                        Log.d(TAG, "Gender: ${event.gender}")
+                        prePopulateInputFields(
+                            name = event.name,
+                            phone = event.phone,
+                            email = event.email,
+                            imageUri = event.imageUri.toString(),
+                            gender = event.gender
+                        )
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    private fun prePopulateInputFields(name: String, phone: String, email: String, imageUri: String,gender: GenderEnum) {
+        binding.apply {
+            etName.setText(name)
+            etPhone.setText(phone)
+            etEmail.setText(email)
+            Glide.with(this@EditAccountActivity)
+                .load(imageUri)
+                .into(ivProfilePic)
+            if (gender.name == GenderEnum.Male.name) {
+                btnMale.strokeWidth = 2
+                btnFemale.strokeWidth = 0
+            } else {
+                btnMale.strokeWidth = 0
+                btnFemale.strokeWidth = 2
+            }
+
+        }
+
     }
 
     private fun showSelectedGenderButton(_state: ProfileState) {
         binding.apply {
-            if (_state.gender.name == GenderEnum.Male.name){
+            if (_state.gender?.name == GenderEnum.Male.name) {
                 btnMale.strokeWidth = 2
                 btnFemale.strokeWidth = 0
             } else {
@@ -91,7 +174,7 @@ class EditAccountActivity: AppCompatActivity() {
         }
     }
 
-    private fun setUpInputFields(){
+    private fun setUpInputFields() {
         binding.apply {
             // Name Field
             etName.doOnTextChanged { text, _, _, _ ->
@@ -113,7 +196,7 @@ class EditAccountActivity: AppCompatActivity() {
         }
     }
 
-    private fun showErrorsIfAny(state: ProfileState){
+    private fun showErrorsIfAny(state: ProfileState) {
         binding.apply {
             etName.error = state.nameError
             etEmail.error = state.emailError
@@ -121,7 +204,7 @@ class EditAccountActivity: AppCompatActivity() {
         }
     }
 
-    private fun setupGenderButtons(){
+    private fun setupGenderButtons() {
         binding.apply {
             btnMale.setOnClickListener {
                 profileViewModel.onEvent(EditProfileEvents.OnGenderChange(GenderEnum.Male))
@@ -135,7 +218,7 @@ class EditAccountActivity: AppCompatActivity() {
     private fun setupClicks() {
         binding.apply {
             // Back Button
-            btnBack.setOnClickListener{
+            btnBack.setOnClickListener {
                 finish()
             }
 
@@ -152,7 +235,7 @@ class EditAccountActivity: AppCompatActivity() {
     }
 
 
-    private fun openPhotoPicker(){
+    private fun openPhotoPicker() {
         Intent().apply {
             type = "image/*"
             action = Intent.ACTION_GET_CONTENT
@@ -160,6 +243,7 @@ class EditAccountActivity: AppCompatActivity() {
             photoIntentResultLauncher.launch(it)
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

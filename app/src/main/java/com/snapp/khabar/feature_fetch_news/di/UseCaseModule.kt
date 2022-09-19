@@ -4,14 +4,12 @@ import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
 import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
 import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
-import com.snapp.khabar.feature_fetch_news.domain.repository.AuthRepository
-import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteCommentsRepository
-import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteNewsRepository
-import com.snapp.khabar.feature_fetch_news.domain.repository.UserRepository
+import com.snapp.khabar.feature_fetch_news.domain.repository.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.SaveUserIntoFirestoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.UpdateUserUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.UploadProfilePhotoUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +19,17 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
+
+    /**
+     * Upload Photo User Case
+     * */
+    @Provides
+    @Singleton
+    fun provideUploadPhotoUseCase(
+        repository: PhotoRepository
+    ): UploadProfilePhotoUseCase {
+        return UploadProfilePhotoUseCase(repository)
+    }
 
     @Provides
     @Singleton

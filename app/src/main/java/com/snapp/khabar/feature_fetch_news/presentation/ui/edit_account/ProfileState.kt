@@ -6,14 +6,15 @@ import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 
 data class ProfileState(
     val isLoading: Boolean? = null,
+    val userId: String = "",
     val name: String = "",
     val nameError: String? = null,
-    val gender: GenderEnum = GenderEnum.Male,
+    val gender: GenderEnum? = null,
     val email: String = "",
     val emailError: String? = null,
     val phone: String = "",
     val phoneError: String? = null,
-    val imageUri: Uri = "".toUri()
+    val imageUri: Uri? = null
 )
 
 fun ProfileState.toUserDto() =
@@ -21,5 +22,6 @@ fun ProfileState.toUserDto() =
         name = name,
         email = email,
         photoUrl = imageUri.toString(),
-        phoneNumber = phone
+        phoneNumber = phone,
+        gender = gender?.name
     )

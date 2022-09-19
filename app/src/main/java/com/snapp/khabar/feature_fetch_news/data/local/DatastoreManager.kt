@@ -21,6 +21,10 @@ class DatastoreManager @Inject constructor(
     fun getProfileDetails() =
         context.datastore.data
 
+    suspend fun getUserId(): String? {
+        return context.datastore.data.first().uid
+    }
+
 
     suspend fun saveUserInfo(userDto: UserDto){
         context.datastore.updateData {
@@ -29,7 +33,8 @@ class DatastoreManager @Inject constructor(
                 name = userDto.name,
                 email = userDto.email,
                 photoUrl = userDto.photoUrl,
-                phoneNumber = userDto.phoneNumber
+                phoneNumber = userDto.phoneNumber,
+                gender = userDto.gender
             )
         }
     }

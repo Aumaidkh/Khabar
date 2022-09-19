@@ -26,8 +26,8 @@ class SettingsViewModel @Inject constructor(
     /**
      * Events Flow
      * */
-    private val _eventFlow = MutableSharedFlow<SettingsUiEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
+    private val _settingsEventFlow = MutableSharedFlow<SettingsUiEvent>()
+    val eventFlow = _settingsEventFlow.asSharedFlow()
 
 
     fun onEvent(event: SettingsScreenEvent) {
@@ -49,6 +49,7 @@ class SettingsViewModel @Inject constructor(
             }
 
             is SettingsScreenEvent.EditProfile -> {
+                Log.d(TAG, "onEvent: Navigate Edit Profile")
                 navigateToEditProfileScreen()
             }
 
@@ -60,7 +61,7 @@ class SettingsViewModel @Inject constructor(
 
     private fun navigateToEditProfileScreen() {
         viewModelScope.launch {
-            _eventFlow.emit(SettingsUiEvent.NavigateToEditProfileScreen(
+            _settingsEventFlow.emit(SettingsUiEvent.NavigateToEditProfileScreen(
                 _state.value.toUserDto()
             ))
         }
@@ -69,7 +70,7 @@ class SettingsViewModel @Inject constructor(
     private fun signOut() {
         viewModelScope.launch {
             signOutUseCase.invoke()
-            _eventFlow.emit(SettingsUiEvent.NavigateUserToLoginScreen)
+            _settingsEventFlow.emit(SettingsUiEvent.NavigateUserToLoginScreen)
         }
     }
 
@@ -85,7 +86,6 @@ class SettingsViewModel @Inject constructor(
                         userId = userDto.uid ?: "aafafa"
                     )
                 }
-                Log.d(TAG, "User DTO: $userDto")
 
             }.launchIn(this)
         }

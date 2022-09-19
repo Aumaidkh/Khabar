@@ -24,6 +24,8 @@ sealed class EditProfileEvents {
         val imageUri: Uri
     ): EditProfileEvents()
 
+    object PrePopulateInputFields: EditProfileEvents()
+
     object SaveChanges: EditProfileEvents()
 
     sealed class UiEvents {
@@ -34,6 +36,17 @@ sealed class EditProfileEvents {
         data class ShowToast(
             val message: String
         ): UiEvents()
+
+        object ProfileUpdated: UiEvents()
+
+        data class PrepopulateInputs(
+            val name: String,
+            val imageUri: Uri,
+            val email: String,
+            val phone: String,
+            val gender: GenderEnum
+        ): UiEvents()
+
     }
 
 }

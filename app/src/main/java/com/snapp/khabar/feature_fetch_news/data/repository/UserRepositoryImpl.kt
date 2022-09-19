@@ -1,5 +1,6 @@
 package com.snapp.khabar.feature_fetch_news.data.repository
 
+import android.util.Log
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.DocumentSnapshot
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "UserRepositoryImpl"
 class UserRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val datastoreManager: DatastoreManager
@@ -64,7 +66,8 @@ class UserRepositoryImpl @Inject constructor(
                         name = result.getString("name"),
                         email = result.getString("email"),
                         photoUrl = result.getString("photoUrl"),
-                        phoneNumber = result.getString("phoneNumber")
+                        phoneNumber = result.getString("phoneNumber"),
+                        gender = result.getString("gender")
                     )
                     send(user)
 
@@ -92,9 +95,11 @@ class UserRepositoryImpl @Inject constructor(
         }.distinctUntilChanged()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun updateUserInfo(userId: String, userDto: UserDto): Flow<UserResult> {
-        return callbackFlow {
-            val onSuccess = OnSuccessListener<Void>{ result ->
+
+        return callbackFlow<UserResult> {
+            val onSuccess = OnSuccessListener<Void>{ _ ->
                 launch {
                     send(
                         UserResult.Complete.Success
@@ -122,8 +127,11 @@ class UserRepositoryImpl @Inject constructor(
              * Updating the datastore preferences as well
              * */
             datastoreManager.saveUserInfo(userDto)
-        }
+
+            awaitClose()
+        }.distinctUntilChanged()
     }
+
 
 
 }

@@ -43,7 +43,8 @@ class AuthRepositoryImpl @Inject constructor(
                                     name = firebaseUser.displayName,
                                     email = firebaseUser.email,
                                     phoneNumber = firebaseUser.phoneNumber,
-                                    photoUrl = firebaseUser.photoUrl.toString()
+                                    photoUrl = firebaseUser.photoUrl.toString(),
+                                    gender = ""
                                 )
                             )
                         )

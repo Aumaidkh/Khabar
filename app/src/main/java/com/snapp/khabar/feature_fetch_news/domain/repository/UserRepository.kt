@@ -1,5 +1,6 @@
 package com.snapp.khabar.feature_fetch_news.domain.repository
 
+import android.net.Uri
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
 import com.snapp.khabar.feature_fetch_news.domain.util.Result
@@ -12,4 +13,5 @@ interface UserRepository {
     suspend fun getUserInfo(userId: String): Flow<UserDto?>
 
     suspend fun updateUserInfo(userId: String, userDto: UserDto): Flow<UserResult>
+
 }

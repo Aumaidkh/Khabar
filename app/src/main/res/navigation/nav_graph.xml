@@ -10,7 +10,8 @@
         android:label="SettingsFragment" >
         <action
             android:id="@+id/action_settings_to_editAccountActivity"
-            app:destination="@id/editAccountActivity" />
+            app:destination="@id/editAccountActivity"
+            app:launchSingleTop="true" />
     </fragment>
     <fragment
         android:id="@+id/home"
