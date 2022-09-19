@@ -23,5 +23,6 @@ fun ProfileState.toUserDto() =
         email = email,
         photoUrl = imageUri.toString(),
         phoneNumber = phone,
-        gender = gender?.name
+        gender = gender?.name,
+        uid = userId
     )

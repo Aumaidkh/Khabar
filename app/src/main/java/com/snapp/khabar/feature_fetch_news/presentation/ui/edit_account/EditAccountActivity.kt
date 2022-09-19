@@ -75,14 +75,13 @@ class EditAccountActivity : AppCompatActivity() {
 
         setUpInputFields()
 
-
     }
 
     override fun onResume() {
         super.onResume()
         profileViewModel.onEvent(EditProfileEvents.PrePopulateInputFields)
-
     }
+
 
     private fun consumeFlows() {
         // Collecting State
