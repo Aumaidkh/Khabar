@@ -72,7 +72,7 @@ class SettingsFragment : Fragment() {
             }
 
             switch1.setOnCheckedChangeListener { _, isEnabled ->
-                Log.d("TAG", "onCreateView: isOn: $isEnabled")
+              //  Log.d("TAG", "onCreateView: isOn: $isEnabled")
                 if (isEnabled) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 } else {
@@ -92,9 +92,9 @@ class SettingsFragment : Fragment() {
             settingsViewModel.state.collect { state ->
                 if (state.isLoading) {
                     // SHow Loading
-                    Log.d(TAG, "consumeFlows: Loading")
+                 //   Log.d(TAG, "consumeFlows: Loading")
                 } else {
-                    Log.d(TAG, "consumeFlows: Success")
+                  //  Log.d(TAG, "consumeFlows: Success")
                     updateUi(state)
                 }
             }
@@ -120,6 +120,7 @@ class SettingsFragment : Fragment() {
                      * Navigate User To Edit Profile
                      * */
                     is SettingsUiEvent.NavigateToEditProfileScreen -> {
+                        Log.d(TAG, "Navigating to Edit Profile Screen")
                         findNavController().navigate(R.id.action_settings_to_editAccountActivity)
                     }
                 }
@@ -160,7 +161,7 @@ class SettingsFragment : Fragment() {
 
             tvName.text = state.username
             tvEmail.text = state.email
-            Log.d(TAG, "updateUi: ${state.imageUrl}")
+           // Log.d(TAG, "updateUi: ${state.imageUrl}")
 
         }
     }

@@ -1,12 +1,11 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.settings
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,8 +25,8 @@ class SettingsViewModel @Inject constructor(
     /**
      * Events Flow
      * */
-    private val _settingsEventFlow = MutableSharedFlow<SettingsUiEvent>()
-    val eventFlow = _settingsEventFlow.asSharedFlow()
+    private val _eventChannel = Channel<SettingsUiEvent>()
+    val eventFlow = _eventChannel.receiveAsFlow()
 
 
     fun onEvent(event: SettingsScreenEvent) {
@@ -49,7 +48,6 @@ class SettingsViewModel @Inject constructor(
             }
 
             is SettingsScreenEvent.EditProfile -> {
-                Log.d(TAG, "onEvent: Navigate Edit Profile")
                 navigateToEditProfileScreen()
             }
 
@@ -61,16 +59,14 @@ class SettingsViewModel @Inject constructor(
 
     private fun navigateToEditProfileScreen() {
         viewModelScope.launch {
-            _settingsEventFlow.emit(SettingsUiEvent.NavigateToEditProfileScreen(
-                _state.value.toUserDto()
-            ))
+            _eventChannel.send(SettingsUiEvent.NavigateToEditProfileScreen)
         }
     }
 
     private fun signOut() {
         viewModelScope.launch {
             signOutUseCase.invoke()
-            _settingsEventFlow.emit(SettingsUiEvent.NavigateUserToLoginScreen)
+            _eventChannel.send(SettingsUiEvent.NavigateUserToLoginScreen)
         }
     }
 

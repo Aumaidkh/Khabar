@@ -5,8 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -19,11 +17,11 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.snapp.khabar.R
 import com.snapp.khabar.databinding.ActivityEditAccountBinding
-import com.snapp.khabar.feature_fetch_news.presentation.ui.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 private const val TAG = "EditAccountActivity"
+
 @AndroidEntryPoint
 class EditAccountActivity : AppCompatActivity() {
 
@@ -42,6 +40,7 @@ class EditAccountActivity : AppCompatActivity() {
     /**
      * Other Vars
      * */
+
     /**
      * Photo Activity on Result
      * */
@@ -77,13 +76,12 @@ class EditAccountActivity : AppCompatActivity() {
         setUpInputFields()
 
 
-
     }
 
     override fun onResume() {
         super.onResume()
         profileViewModel.onEvent(EditProfileEvents.PrePopulateInputFields)
-        Log.d(TAG, "onResume: ")
+
     }
 
     private fun consumeFlows() {
@@ -142,7 +140,13 @@ class EditAccountActivity : AppCompatActivity() {
     }
 
 
-    private fun prePopulateInputFields(name: String, phone: String, email: String, imageUri: String,gender: GenderEnum) {
+    private fun prePopulateInputFields(
+        name: String,
+        phone: String,
+        email: String,
+        imageUri: String,
+        gender: GenderEnum
+    ) {
         binding.apply {
             etName.setText(name)
             etPhone.setText(phone)
