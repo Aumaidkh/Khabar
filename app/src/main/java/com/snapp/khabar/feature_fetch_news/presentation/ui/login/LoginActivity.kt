@@ -20,6 +20,10 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.snapp.khabar.R
 import com.snapp.khabar.databinding.ActivityLoginBinding
 import com.snapp.khabar.feature_fetch_news.presentation.ui.home.HomeActivity
+import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.settings.SettingsScreenEvent
+import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.settings.SettingsUiEvent
+import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.settings.SettingsViewModel
+import com.snapp.khabar.feature_fetch_news.presentation.util.enableNightMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -36,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
      * ViewModels
      * */
     private val loginViewModel: LoginViewModel by viewModels()
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
     /**
      * Other Vars
@@ -66,6 +71,7 @@ class LoginActivity : AppCompatActivity() {
 
         initSignInButton()
         initGoogleSignInClient()
+
 
         /**
          * Check if user is already logged in
@@ -143,10 +149,28 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+
+        /**
+         * Settings view model events
+         * */
+        lifecycleScope.launchWhenStarted {
+
+            settingsViewModel.eventFlow.collect { event ->
+                when(event){
+                    is SettingsUiEvent.DarkModeToggle -> {
+                        enableNightMode(event.isEnabled)
+                    }
+                }
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
+        /**
+         * Check if DarkMode is Enabled
+         * */
+        settingsViewModel.onEvent(SettingsScreenEvent.IsDarkModeEnabled)
         consumeFlows()
     }
 

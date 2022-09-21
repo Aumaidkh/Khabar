@@ -20,6 +20,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.snapp.khabar.R
 import com.snapp.khabar.databinding.FragmentSettingsBinding
 import com.snapp.khabar.feature_fetch_news.presentation.ui.login.LoginActivity
+import com.snapp.khabar.feature_fetch_news.presentation.util.enableNightMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -95,17 +96,16 @@ class SettingsFragment : Fragment() {
                 settingsViewModel.onEvent(SettingsScreenEvent.PhoneNumberClickEvent)
             }
 
-            switch1.setOnCheckedChangeListener { _, isEnabled ->
-              //  Log.d("TAG", "onCreateView: isOn: $isEnabled")
-                if (isEnabled) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
-                }
+            /**
+             * Dark Mode Switch
+             * */
+            darkModeSwitch.setOnCheckedChangeListener { _, isEnabled ->
+                settingsViewModel.onEvent(SettingsScreenEvent.ApplyDarkMode(isEnabled))
             }
         }
     }
+
+
 
     private fun consumeFlows() {
         Log.d(TAG, "consumeFlows: ")
@@ -164,6 +164,13 @@ class SettingsFragment : Fragment() {
                      * Handle Phone Click*/
                     is SettingsUiEvent.PhoneEvent -> {
                         openPhoneIntent(event.phone)
+                    }
+
+                    /**
+                     * Handle Dark Mode Light Mode State
+                     * */
+                    is SettingsUiEvent.DarkModeToggle -> {
+                        activity?.enableNightMode(isEnabled = event.isEnabled)
                     }
                 }
             }

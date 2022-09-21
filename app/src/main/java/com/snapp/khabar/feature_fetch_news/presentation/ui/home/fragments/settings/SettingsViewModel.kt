@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.DarkModeToggleUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.CheckIfDarkModeIsEnabledUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.CheckIfNotificationIsEnabledUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.NotificationsToggleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -13,7 +17,11 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val datastore: DatastoreManager,
-    private val signOutUseCase: SignOutUseCase
+    private val signOutUseCase: SignOutUseCase,
+    private val darkModeToggleUseCase: DarkModeToggleUseCase,
+    private val notificationsToggleUseCase: NotificationsToggleUseCase,
+    private val checkIfDarkModeIsEnabledUseCase: CheckIfDarkModeIsEnabledUseCase,
+    private val checkIfNotificationIsEnabledUseCase: CheckIfNotificationIsEnabledUseCase
 ) : ViewModel() {
 
     /**
@@ -32,9 +40,7 @@ class SettingsViewModel @Inject constructor(
     fun onEvent(event: SettingsScreenEvent) {
         when (event) {
             is SettingsScreenEvent.DarkModeToggle -> {
-                _state.update {
-                    it.copy(darkModeEnabled = event.enabled)
-                }
+
             }
 
             is SettingsScreenEvent.NotificationToggle -> {
@@ -65,6 +71,64 @@ class SettingsViewModel @Inject constructor(
 
             is SettingsScreenEvent.PhoneNumberClickEvent -> {
                 handlePhoneNumberClick()
+            }
+
+            is SettingsScreenEvent.IsDarkModeEnabled -> {
+                emitDarkModeState()
+            }
+
+
+            is SettingsScreenEvent.IsNotificationsEnabled -> {
+                emitNotificationState()
+            }
+
+            is SettingsScreenEvent.ApplyDarkMode -> {
+                toggleDarkMode(event.isEnabled)
+            }
+
+            is SettingsScreenEvent.EnableNotification -> {
+                toggleNotifications(event.isEnabled)
+            }
+
+        }
+    }
+
+
+
+    private fun toggleDarkMode(enabled: Boolean){
+        viewModelScope.launch {
+            darkModeToggleUseCase.invoke(enabled)
+            emitDarkModeState()
+        }
+    }
+
+    private fun toggleNotifications(enabled: Boolean){
+        viewModelScope.launch {
+            notificationsToggleUseCase.invoke(enabled)
+            emitNotificationState()
+        }
+    }
+
+    private fun emitDarkModeState(){
+        viewModelScope.launch {
+            checkIfDarkModeIsEnabledUseCase.invoke().also {
+                _eventChannel.send(
+                    SettingsUiEvent.DarkModeToggle(
+                        isEnabled = it
+                    )
+                )
+            }
+        }
+    }
+
+    private fun emitNotificationState(){
+        viewModelScope.launch {
+            checkIfNotificationIsEnabledUseCase.invoke().also {
+                _eventChannel.send(
+                    SettingsUiEvent.NotificationToggle(
+                        isEnabled = it
+                    )
+                )
             }
         }
     }

@@ -9,5 +9,13 @@ sealed class SettingsScreenEvent {
     object PrivacyPolicyClickEvent: SettingsScreenEvent()
     object EmailClickEvent: SettingsScreenEvent()
     object PhoneNumberClickEvent: SettingsScreenEvent()
+    object IsDarkModeEnabled: SettingsScreenEvent()
+    object IsNotificationsEnabled: SettingsScreenEvent()
+    data class ApplyDarkMode(
+        val isEnabled: Boolean
+    ): SettingsScreenEvent()
+    data class EnableNotification(
+        val isEnabled: Boolean
+    ): SettingsScreenEvent()
 
 }

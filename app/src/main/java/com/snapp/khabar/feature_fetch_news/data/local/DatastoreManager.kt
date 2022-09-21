@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class DatastoreManager @Inject constructor(
     private val context: Context,
-    private val cryptoManager: CryptoManager
+    cryptoManager: CryptoManager
 ) {
 
     private val Context.datastore by dataStore(

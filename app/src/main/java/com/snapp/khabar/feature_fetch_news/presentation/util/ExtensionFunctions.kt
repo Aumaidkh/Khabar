@@ -1,6 +1,8 @@
 package com.snapp.khabar.feature_fetch_news.presentation.util
 
+import android.app.Activity
 import android.net.Uri
+import androidx.appcompat.app.AppCompatDelegate
 import com.snapp.khabar.feature_fetch_news.presentation.ui.edit_account.GenderEnum
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,4 +31,15 @@ fun String.toGenderEnum(): GenderEnum {
  * */
 fun Uri?.isLocalUri(): Boolean{
     return !this.toString().startsWith("http")
+}
+
+/**
+ * Enables Night Mode In activity*/
+fun Activity.enableNightMode(isEnabled: Boolean) {
+    if (isEnabled) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    } else {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+    }
 }
