@@ -66,17 +66,16 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        /**
+         * Check if user is already logged in
+         * */
+        loginViewModel.onEvent(LoginEvents.CheckIfUserIsAlreadyAuthenticated)
         setTheme(R.style.splashScreenTheme)
         _binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
 
         initSignInButton()
         initGoogleSignInClient()
 
-
-        /**
-         * Check if user is already logged in
-         * */
-       // loginViewModel.onEvent(LoginEvents.CheckIfUserIsAlreadyAuthenticated)
     }
 
     private fun initSignInButton() {

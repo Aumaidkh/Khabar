@@ -3,6 +3,8 @@ package com.snapp.khabar.feature_fetch_news.presentation.ui.comment
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
+import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.model.CommentModel
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.FetchAllCommentsForNews
@@ -18,7 +20,8 @@ import javax.inject.Inject
 class CommentsViewModel @Inject constructor(
     private val submitCommentUseCase: SubmitCommentUseCase,
     private val fetchAllCommentsForNews: FetchAllCommentsForNews,
-    private val validateCommentUseCase: ValidateCommentUseCase
+    private val validateCommentUseCase: ValidateCommentUseCase,
+    private val datastoreManager: DatastoreManager
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(CommentState())
@@ -27,16 +30,36 @@ class CommentsViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<CommentsEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    private val _userState = MutableStateFlow(UserDto())
+
+    init {
+        populateUserState()
+    }
+
+    /**
+     * Getting Hold of the values like userId, userName, Image Url
+     * so that they can be attached to the comment later
+     * */
+    private fun populateUserState() {
+        datastoreManager.getProfileDetails().onEach { userDto ->
+            _userState.update {
+                userDto
+            }
+        }.launchIn(
+            viewModelScope
+        )
+    }
+
 
     fun onEvent(event: CommentsScreenEvents) {
         when (event) {
             is CommentsScreenEvents.SubmitCommentEvent -> {
                 submitComment(
-                    userId = event.userId,
-                    userName = event.userName,
+                    userId = _userState.value.uid!!,
+                    userName = _userState.value.name!!,
                     comment = event.comment,
                     newsId = event.newsId,
-                    imageUrl = event.userImageUrl
+                    imageUrl = _userState.value.photoUrl!!
                 )
             }
 
@@ -59,28 +82,28 @@ class CommentsViewModel @Inject constructor(
 
     private fun fetchAllCommentsForNews(newsId: String) {
         fetchAllCommentsForNews.invoke(newsId).onEach { result ->
-             when(result){
-                 is Result.Loading -> {
-                     Log.d(TAG, "Loading")
-                     _state.update {
-                         it.copy(isLoading = true)
-                     }
-                 }
+            when (result) {
+                is Result.Loading -> {
+                    Log.d(TAG, "Loading")
+                    _state.update {
+                        it.copy(isLoading = true)
+                    }
+                }
 
-                 is Result.Success -> {
-                     Log.d(TAG, "Success Data -> ${result.data}")
-                     _state.update {
-                         it.copy(isLoading = false, data = result.data!!)
-                     }
-                 }
+                is Result.Success -> {
+                    Log.d(TAG, "Success Data -> ${result.data}")
+                    _state.update {
+                        it.copy(isLoading = false, data = result.data!!)
+                    }
+                }
 
-                 is Result.Error -> {
-                     Log.d(TAG, "Error")
-                     _state.update {
-                         it.copy(isLoading = false, data = emptyList(), message = result.message)
-                     }
-                 }
-             }
+                is Result.Error -> {
+                    Log.d(TAG, "Error")
+                    _state.update {
+                        it.copy(isLoading = false, data = emptyList(), message = result.message)
+                    }
+                }
+            }
         }.launchIn(viewModelScope)
     }
 

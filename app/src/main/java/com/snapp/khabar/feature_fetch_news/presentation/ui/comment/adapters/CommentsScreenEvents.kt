@@ -1,7 +1,5 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.comment.adapters
 
-import com.snapp.khabar.feature_fetch_news.presentation.ui.comment.CommentsEvent
-
 sealed class CommentsScreenEvents{
 
     data class SubmitCommentEvent(
