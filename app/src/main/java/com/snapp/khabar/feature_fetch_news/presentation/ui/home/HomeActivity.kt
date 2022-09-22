@@ -24,13 +24,11 @@ private const val TAG = "HomeActivity"
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var viewPagerAdapter: ViewPagerAdapter
     private val settingsViewModel: SettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_layout)
-        val fragmentManager = supportFragmentManager
 
 
 

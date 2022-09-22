@@ -24,7 +24,7 @@ class NewsDetailActivity : AppCompatActivity() {
     private lateinit var timeTv: TextView
     private lateinit var backBtn: ImageButton
     private lateinit var newsIv: ImageView
-    private lateinit var webView: WebView
+    private lateinit var webView: TextView
 
     // Args
     private val newsArgs: NewsDetailActivityArgs by navArgs()
@@ -49,7 +49,7 @@ class NewsDetailActivity : AppCompatActivity() {
         timeTv = findViewById(R.id.tvTimeStamp)
         backBtn = findViewById(R.id.backKey)
         newsIv = findViewById(R.id.ivNewsImage)
-        webView = findViewById(R.id.wvNewsDescrption)
+        webView = findViewById(R.id.tvNewsDesc)
 
         val newsItem = newsArgs.newsItem
 
@@ -82,7 +82,7 @@ class NewsDetailActivity : AppCompatActivity() {
         timeTv.text = item.time!!.getFormattedTime()
 
         // Load data in webview
-        webView.loadUrl(item.url)
+        webView.text = item.desc
 
         // Setting image through glide
         Glide.with(this)

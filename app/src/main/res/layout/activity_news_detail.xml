@@ -15,7 +15,7 @@
             android:id="@+id/ivNewsImage"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             tools:src="@drawable/dp"
             android:transitionName="imageTransition"
             app:layout_constraintEnd_toEndOf="parent"
@@ -69,8 +69,8 @@
 
 
 
-        <WebView
-            android:id="@+id/wvNewsDescrption"
+        <TextView
+            android:id="@+id/tvNewsDesc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="20dp"

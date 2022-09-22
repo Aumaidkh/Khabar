@@ -18,4 +18,13 @@ object HelperFunctions {
         val date = Date(millis)
         return simpleDateFormat.format(date)
     }
+
+    /**
+     * Get formatted timestamp
+     * */
+
+    fun handleTimestamp(millis: Long): Date {
+        val dateFormat = SimpleDateFormat("dd MMM yyyy")
+        return Date(dateFormat.format(Date(millis)))
+    }
 }

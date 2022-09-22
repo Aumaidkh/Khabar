@@ -46,7 +46,6 @@ class NewsAdapter(
                 .into(image)
 
             itemView.setOnClickListener {
-
                 navigateToDetailsScreen(news)
 
             }
