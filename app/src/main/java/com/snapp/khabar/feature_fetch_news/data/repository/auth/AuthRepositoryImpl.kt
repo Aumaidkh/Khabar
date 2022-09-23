@@ -1,8 +1,7 @@
-package com.snapp.khabar.feature_fetch_news.data.repository
+package com.snapp.khabar.feature_fetch_news.data.repository.auth
 
 import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.AuthCredential

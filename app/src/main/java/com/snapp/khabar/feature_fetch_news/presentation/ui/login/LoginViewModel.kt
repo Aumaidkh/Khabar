@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthCredential
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
-import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
+import com.snapp.khabar.feature_fetch_news.data.repository.auth.AuthenticateUserWithGoogleUseCase
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.SaveUserDataToDataStoreUseCase

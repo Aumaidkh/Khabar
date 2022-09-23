@@ -1,4 +1,4 @@
-package com.snapp.khabar.feature_fetch_news.data.repository
+package com.snapp.khabar.feature_fetch_news.data.repository.auth
 
 import com.google.firebase.auth.AuthCredential
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto

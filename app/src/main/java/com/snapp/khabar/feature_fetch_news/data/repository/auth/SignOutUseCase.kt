@@ -1,4 +1,4 @@
-package com.snapp.khabar.feature_fetch_news.data.repository
+package com.snapp.khabar.feature_fetch_news.data.repository.auth
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.snapp.khabar.feature_fetch_news.domain.repository.AuthRepository

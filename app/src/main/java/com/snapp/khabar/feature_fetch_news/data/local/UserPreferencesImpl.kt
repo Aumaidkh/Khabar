@@ -1,6 +1,7 @@
 package com.snapp.khabar.feature_fetch_news.data.local
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.serialization.serializer
 import javax.inject.Inject
 
+private const val TAG = "UserPreferencesImpl"
 class UserPreferencesImpl @Inject constructor(
     val dataStore: DataStore<UserDto>
 ) : UserPreferencesDataStore {
@@ -22,10 +24,12 @@ class UserPreferencesImpl @Inject constructor(
 
 
     override suspend fun getProfileDetails(): UserDto {
+        Log.d(TAG, "Data -> ${dataStore.data.first()}")
         return dataStore.data.first()
     }
 
     override suspend fun saveUserInfo(userDto: UserDto) {
+        Log.d(TAG, "Updating Data")
         dataStore.updateData {
             UserDto(
                 uid = userDto.uid,

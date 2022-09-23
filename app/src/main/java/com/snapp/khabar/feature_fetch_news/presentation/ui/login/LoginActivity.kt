@@ -153,7 +153,6 @@ class LoginActivity : AppCompatActivity() {
          * Settings view model events
          * */
         lifecycleScope.launchWhenStarted {
-
             settingsViewModel.eventFlow.collect { event ->
                 when(event){
                     is SettingsUiEvent.DarkModeToggle -> {

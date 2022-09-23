@@ -1,4 +1,4 @@
-package com.snapp.khabar.feature_fetch_news.data.repository
+package com.snapp.khabar.feature_fetch_news.data.repository.user
 
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener

@@ -1,12 +1,10 @@
-package com.snapp.khabar.feature_fetch_news.data.repository
+package com.snapp.khabar.feature_fetch_news.data.repository.news
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.CommentDto
 import com.snapp.khabar.feature_fetch_news.data.util.CollectionNames.COMMENTS
 import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteCommentsRepository
-import com.snapp.khabar.feature_fetch_news.domain.util.Result
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import java.util.*
 import javax.inject.Inject

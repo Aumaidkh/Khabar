@@ -1,8 +1,8 @@
 package com.snapp.khabar.feature_fetch_news.di
 
-import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
-import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
-import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
+import com.snapp.khabar.feature_fetch_news.data.repository.auth.AuthenticateUserWithGoogleUseCase
+import com.snapp.khabar.feature_fetch_news.data.repository.auth.SignOutUseCase
+import com.snapp.khabar.feature_fetch_news.data.repository.news.SubmitCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.repository.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase

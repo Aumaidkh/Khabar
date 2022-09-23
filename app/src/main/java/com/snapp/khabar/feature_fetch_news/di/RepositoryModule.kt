@@ -5,6 +5,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import com.snapp.khabar.feature_fetch_news.data.repository.*
+import com.snapp.khabar.feature_fetch_news.data.repository.auth.AuthRepositoryImpl
+import com.snapp.khabar.feature_fetch_news.data.repository.news.FirebaseFirestoreCommentsRepositoryImpl
+import com.snapp.khabar.feature_fetch_news.data.repository.news.FirebaseFirestoreRepositoryImpl
+import com.snapp.khabar.feature_fetch_news.data.repository.user.PhotoRepositoryImpl
+import com.snapp.khabar.feature_fetch_news.data.repository.user.UserRepositoryImpl
 import com.snapp.khabar.feature_fetch_news.domain.repository.*
 import dagger.Module
 import dagger.Provides

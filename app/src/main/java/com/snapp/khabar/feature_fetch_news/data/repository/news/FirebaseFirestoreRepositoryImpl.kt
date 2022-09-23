@@ -1,4 +1,4 @@
-package com.snapp.khabar.feature_fetch_news.data.repository
+package com.snapp.khabar.feature_fetch_news.data.repository.news
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.ArticleDto

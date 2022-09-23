@@ -3,7 +3,7 @@ package com.snapp.khabar.feature_fetch_news.di
 import android.app.Application
 import androidx.room.Room
 import com.snapp.khabar.feature_fetch_news.data.local.entities.NewsDataBase
-import com.snapp.khabar.feature_fetch_news.data.repository.LocalRepositoryImpl
+import com.snapp.khabar.feature_fetch_news.data.repository.news.LocalRepositoryImpl
 import com.snapp.khabar.feature_fetch_news.domain.repository.LocalRepository
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.DeleteNewsEntityUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.InsertNewsEntityUseCase

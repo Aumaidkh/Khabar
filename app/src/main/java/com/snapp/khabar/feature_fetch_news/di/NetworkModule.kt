@@ -2,7 +2,7 @@ package com.snapp.khabar.feature_fetch_news.di
 
 import com.snapp.khabar.feature_fetch_news.core.Constants.BASE_URL
 import com.snapp.khabar.feature_fetch_news.data.remote.NewsApi
-import com.snapp.khabar.feature_fetch_news.data.repository.NewsRepositoryImpl
+import com.snapp.khabar.feature_fetch_news.data.repository.news.NewsRepositoryImpl
 import com.snapp.khabar.feature_fetch_news.domain.repository.NewsRepository
 import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteNewsRepository
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.FetchAllNewsUseCase

@@ -1,8 +1,9 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.settings
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
+import com.snapp.khabar.feature_fetch_news.data.repository.auth.SignOutUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.DarkModeToggleUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.CheckIfDarkModeIsEnabledUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.CheckIfNotificationIsEnabledUseCase
@@ -16,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    // private val datastore: DatastoreManager,
     private val fetchUserFromDataStoreUseCase: FetchUserFromDataStoreUseCase,
     private val signOutUseCase: SignOutUseCase,
     private val darkModeToggleUseCase: DarkModeToggleUseCase,
@@ -37,6 +37,9 @@ class SettingsViewModel @Inject constructor(
     private val _eventChannel = Channel<SettingsUiEvent>()
     val eventFlow = _eventChannel.receiveAsFlow()
 
+    init {
+        setupScreenScreen()
+    }
 
     fun onEvent(event: SettingsScreenEvent) {
         when (event) {
@@ -169,21 +172,9 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun setupScreenScreen() {
-//        viewModelScope.launch {
-//            datastore.getProfileDetails().onEach { userDto ->
-//                _state.update {
-//                    it.copy(
-//                        isLoading = false,
-//                        username = userDto.name ?: "No Name",
-//                        email = userDto.email ?: "abc@gmail.com",
-//                        imageUrl = userDto.photoUrl ?: "www.google.com",
-//                        userId = userDto.uid ?: "aafafa"
-//                    )
-//                }
-//
-//            }.launchIn(this)
         viewModelScope.launch {
             fetchUserFromDataStoreUseCase.invoke().also { userDto ->
+                Log.d(TAG, "User Retrieved: $userDto")
                 _state.update {
                     it.copy(
                         isLoading = false,

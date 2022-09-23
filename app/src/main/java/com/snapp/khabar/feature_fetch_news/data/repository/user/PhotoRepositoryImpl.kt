@@ -1,4 +1,4 @@
-package com.snapp.khabar.feature_fetch_news.data.repository
+package com.snapp.khabar.feature_fetch_news.data.repository.user
 
 import android.net.Uri
 import com.google.firebase.storage.StorageReference

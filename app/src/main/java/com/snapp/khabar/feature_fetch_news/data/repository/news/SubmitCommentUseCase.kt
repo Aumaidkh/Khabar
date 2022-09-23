@@ -1,4 +1,4 @@
-package com.snapp.khabar.feature_fetch_news.data.repository
+package com.snapp.khabar.feature_fetch_news.data.repository.news
 
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.CommentDto
 import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteCommentsRepository
