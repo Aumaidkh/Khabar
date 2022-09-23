@@ -7,4 +7,5 @@ data class ValidationUseCases @Inject constructor(
     val validatePhoneUseCase: ValidatePhoneUseCase,
     val validateEmailUseCase: ValidateEmailUseCase,
     val validateCommentUseCase: ValidateCommentUseCase,
+    val validatePasswordUseCase: ValidatePasswordUseCase
 )

@@ -8,9 +8,12 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.auth.User
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
+import com.snapp.khabar.feature_fetch_news.data.util.UserResult
 import com.snapp.khabar.feature_fetch_news.domain.repository.AuthRepository
 import com.snapp.khabar.feature_fetch_news.domain.util.Result
+import com.snapp.khabar.feature_fetch_news.domain.util.toUserDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -20,11 +23,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "AuthRepositoryImpl"
+
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val googleSignInClient: GoogleSignInClient
 ) : AuthRepository {
-
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun authenticate(authCredential: AuthCredential): Flow<Result<UserDto>> {
@@ -32,7 +35,7 @@ class AuthRepositoryImpl @Inject constructor(
             launch {
                 send(Result.Loading())
             }
-            val onSuccessListener = OnSuccessListener<AuthResult>{ authResult ->
+            val onSuccessListener = OnSuccessListener<AuthResult> { authResult ->
                 val firebaseUser = authResult.user
                 if (firebaseUser != null) {
                     launch {
@@ -52,7 +55,7 @@ class AuthRepositoryImpl @Inject constructor(
                 }
             }
 
-            val onFailureListener = OnFailureListener{
+            val onFailureListener = OnFailureListener {
                 launch {
                     send(
                         Result.Error(it.message.toString())
@@ -72,7 +75,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun isUserAuthenticated(): Flow<Result<Boolean>> {
         return callbackFlow<Result<Boolean>> {
             val authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-                if (firebaseAuth.currentUser != null){
+                if (firebaseAuth.currentUser != null) {
                     Log.d(TAG, "Authenticated")
                     launch {
                         send(Result.Success(true))
@@ -86,7 +89,7 @@ class AuthRepositoryImpl @Inject constructor(
             }
 
             firebaseAuth.addAuthStateListener(authListener)
-            awaitClose{
+            awaitClose {
                 firebaseAuth.removeAuthStateListener(authListener)
             }
         }.distinctUntilChanged()
@@ -96,5 +99,27 @@ class AuthRepositoryImpl @Inject constructor(
         googleSignInClient.signOut()
         googleSignInClient.revokeAccess()
         firebaseAuth.signOut()
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override suspend fun createUserWithEmailAndPassword(email: String, password: String): Flow<Result<UserDto?>> {
+        return callbackFlow<Result<UserDto?>> {
+            val onSuccessListener = OnSuccessListener<AuthResult> { result ->
+                launch {
+                    send(Result.Success(result.user.toUserDto()))
+                }
+            }
+
+            val onFailureListener = OnFailureListener {
+                launch {
+                    send(Result.Error(it.message.toString()))
+                }
+            }
+
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener)
+            awaitClose()
+        }.distinctUntilChanged()
     }
 }

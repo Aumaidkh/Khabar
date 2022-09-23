@@ -1,5 +1,7 @@
 package com.snapp.khabar.feature_fetch_news.domain.util
 
+import com.google.firebase.auth.FirebaseUser
+import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,4 +20,22 @@ fun String.getFormattedTimeStamp(): String {
     }catch (e: Exception){
         ""
     }
+}
+
+
+/**
+ * Mapping Firebase user to user dto
+ * will be used in auth repository to map the user
+ * when user is created successfully*/
+fun FirebaseUser?.toUserDto(): UserDto? {
+    if (this!=null){
+        return UserDto(
+            uid = uid,
+            name = displayName ?: "No Name",
+            email = email,
+            photoUrl = photoUrl.toString(),
+            phoneNumber = phoneNumber
+        )
+    }
+    return null
 }

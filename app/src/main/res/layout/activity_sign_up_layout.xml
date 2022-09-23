@@ -78,36 +78,6 @@
 
             <!--Email-->
             <TextView
-                android:text="Full Name"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="16sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!--Email Field-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginTop="10dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxBackgroundColor="@color/white"
-                app:boxStrokeWidth="0dp"
-                android:theme="@style/CustomEditTextTheme"
-                app:boxStrokeWidthFocused="1dp"
-                app:boxStrokeColor="@color/orange"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:inputType="textEmailAddress"
-                    android:hint="Enter your name"
-                    android:textColorHint="@color/secondary_text_color"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--Email-->
-            <TextView
                 android:text="E-mail"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_medium"
@@ -128,8 +98,40 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
                     android:inputType="textEmailAddress"
-                    android:hint="Enter your email"
+                    android:hint="Enter your name"
+                    android:textColorHint="@color/secondary_text_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Email-->
+            <TextView
+                android:text="Password"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--Email Field-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="10dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeWidth="0dp"
+                android:theme="@style/CustomEditTextTheme"
+                app:boxStrokeWidthFocused="1dp"
+                app:boxStrokeColor="@color/orange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:inputType="textPassword"
+                    android:hint="Password"
                     android:textColorHint="@color/secondary_text_color"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
@@ -160,9 +162,9 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
+                    android:id="@+id/etRePassword"
                     android:inputType="textPassword"
-                    android:hint="Enter your password"
+                    android:hint="Re-enter password"
                     android:textColorHint="@color/secondary_text_color"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

@@ -1,9 +1,6 @@
 package com.snapp.khabar.feature_fetch_news.di
 
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidateCommentUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidateEmailUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidateNameUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidatePhoneUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidationUseCases
 import dagger.Module
 import dagger.Provides
@@ -24,15 +21,25 @@ object ValidationUseCases {
         validateName: ValidateNameUseCase,
         validateEmail: ValidateEmailUseCase,
         validatePhone: ValidatePhoneUseCase,
-        validateComment: ValidateCommentUseCase
+        validateComment: ValidateCommentUseCase,
+        validatePasswordUseCase: ValidatePasswordUseCase
     ): ValidationUseCases{
         return ValidationUseCases(
             validateNameUseCase = validateName,
             validateCommentUseCase = validateComment,
             validateEmailUseCase = validateEmail,
-            validatePhoneUseCase = validatePhone
+            validatePhoneUseCase = validatePhone,
+            validatePasswordUseCase = validatePasswordUseCase
         )
     }
+
+    /**
+     * Validate Password Use Case
+     * */
+    @Provides
+    @Singleton
+    fun providesValidatePasswordUseCase() =
+        ValidatePasswordUseCase()
 
     /**
      * Validate Full Name*/

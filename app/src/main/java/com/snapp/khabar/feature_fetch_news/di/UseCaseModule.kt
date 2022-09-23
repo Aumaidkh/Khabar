@@ -6,6 +6,7 @@ import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.repository.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CreateUserWithEmailAndPasswordUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.*
 import dagger.Module
 import dagger.Provides
@@ -16,6 +17,18 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
+
+
+    /**
+     * Create User With Email Password
+     * */
+    @Provides
+    @Singleton
+    fun provideCreateUserWithEmailPasswordUseCase(
+        repository: AuthRepository
+    ): CreateUserWithEmailAndPasswordUseCase {
+        return CreateUserWithEmailAndPasswordUseCase(repository)
+    }
 
     /**
      * Save User Details*/
