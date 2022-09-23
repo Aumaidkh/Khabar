@@ -54,6 +54,17 @@ class LoginViewModel @Inject constructor(
             is LoginEvents.CheckIfUserIsAlreadyAuthenticated -> {
                 ifUserAlreadyAuthenticated()
             }
+
+            /**
+             * Navigating user to sign up screen
+             * */
+            is LoginEvents.SignUpClick -> {
+                viewModelScope.launch {
+                    _eventFlow.emit(
+                        LoginUiEvents.NavigateToSignUpScreen
+                    )
+                }
+            }
         }
     }
 

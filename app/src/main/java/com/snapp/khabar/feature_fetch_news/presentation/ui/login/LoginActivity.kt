@@ -20,6 +20,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.snapp.khabar.R
 import com.snapp.khabar.databinding.ActivityLoginBinding
 import com.snapp.khabar.feature_fetch_news.presentation.ui.home.HomeActivity
+import com.snapp.khabar.feature_fetch_news.presentation.ui.sign_up.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -71,6 +72,16 @@ class LoginActivity : AppCompatActivity() {
          * Check if user is already logged in
          * */
         loginViewModel.onEvent(LoginEvents.CheckIfUserIsAlreadyAuthenticated)
+        setupClicks()
+    }
+
+    private fun setupClicks(){
+        /**
+         * Sign Up Click Button
+         * */
+        binding.btnSignUp.setOnClickListener {
+            loginViewModel.onEvent(LoginEvents.SignUpClick)
+        }
     }
 
     private fun initSignInButton() {
@@ -116,6 +127,12 @@ class LoginActivity : AppCompatActivity() {
                 when(event){
                     is LoginUiEvents.ShowSnackBar -> {
                         Snackbar.make(binding.root,event.message,Snackbar.LENGTH_SHORT).show()
+                    }
+
+                    is LoginUiEvents.NavigateToSignUpScreen -> {
+                        Intent(this@LoginActivity,SignUpActivity::class.java).also {
+                            startActivity(it)
+                        }
                     }
                 }
             }
