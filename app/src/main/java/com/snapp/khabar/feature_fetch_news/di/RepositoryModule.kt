@@ -4,7 +4,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
-import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.repository.*
 import com.snapp.khabar.feature_fetch_news.domain.repository.*
 import dagger.Module
@@ -34,9 +33,9 @@ object RepositoryModule {
     @Singleton
     fun providesUserRepository(
         firebaseAuth: FirebaseFirestore,
-        datastoreManager: DatastoreManager
+        userPreferencesDataStore: UserPreferencesDataStore
     ): UserRepository {
-        return UserRepositoryImpl(firebaseAuth, datastoreManager)
+        return UserRepositoryImpl(firebaseAuth, userPreferencesDataStore)
     }
 
     @Provides

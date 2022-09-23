@@ -1,15 +1,13 @@
 package com.snapp.khabar.feature_fetch_news.data.repository
 
-import android.util.Log
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.OnProgressListener
-import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.util.Constants.USERS_COLLECTION
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
+import com.snapp.khabar.feature_fetch_news.domain.repository.UserPreferencesDataStore
 import com.snapp.khabar.feature_fetch_news.domain.repository.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -22,7 +20,7 @@ import javax.inject.Inject
 private const val TAG = "UserRepositoryImpl"
 class UserRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
-    private val datastoreManager: DatastoreManager
+    private val userPreferencesDataStore: UserPreferencesDataStore
 ) : UserRepository {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -36,7 +34,7 @@ class UserRepositoryImpl @Inject constructor(
             }
 
 
-            val onSuccessListener = OnSuccessListener<Void>{ result ->
+            val onSuccessListener = OnSuccessListener<Void>{ _ ->
                 launch {
                     send(UserResult.Complete.Success)
                 }
@@ -74,11 +72,11 @@ class UserRepositoryImpl @Inject constructor(
                     /**
                      * Making Sure we are updating data store after getting the latest data
                      * */
-                    datastoreManager.saveUserInfo(user)
+                    userPreferencesDataStore.saveUserInfo(user)
                 }
             }
 
-            val onFailure = OnFailureListener { exception ->
+            val onFailure = OnFailureListener { _ ->
                 launch {
                     send(null)
                 }
@@ -126,7 +124,7 @@ class UserRepositoryImpl @Inject constructor(
             /**
              * Updating the datastore preferences as well
              * */
-            datastoreManager.saveUserInfo(userDto)
+            userPreferencesDataStore.saveUserInfo(userDto)
 
             awaitClose()
         }.distinctUntilChanged()

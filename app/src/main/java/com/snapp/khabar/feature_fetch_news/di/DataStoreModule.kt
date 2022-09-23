@@ -1,17 +1,25 @@
 package com.snapp.khabar.feature_fetch_news.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStoreFile
 import com.snapp.khabar.feature_fetch_news.data.encryption.CryptoManager
-import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
+import com.snapp.khabar.feature_fetch_news.data.encryption.UserProfileSerializer
+import com.snapp.khabar.feature_fetch_news.data.local.UserPreferencesImpl
 import com.snapp.khabar.feature_fetch_news.data.local.UserSettingsDatastoreManager
+import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
+import com.snapp.khabar.feature_fetch_news.domain.repository.UserPreferencesDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
-private const val USER_PROFILE_PREFS = "user-profile"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -22,17 +30,7 @@ object DataStoreModule {
     fun provideCryptoManager() =
         CryptoManager()
 
-    @Singleton
-    @Provides
-    fun provideDatastoreManager(
-        @ApplicationContext appContext: Context,
-        cryptoManager: CryptoManager
-    ): DatastoreManager {
-        return DatastoreManager(
-            context = appContext,
-            cryptoManager = cryptoManager
-        )
-    }
+
 
     @Singleton
     @Provides
@@ -43,6 +41,33 @@ object DataStoreModule {
         return UserSettingsDatastoreManager(
             context = appContext,
             cryptoManager = cryptoManager
+        )
+    }
+
+
+    @Singleton
+    @Provides
+    fun providePreferencesDataStore(
+        @ApplicationContext appContext: Context,
+        cryptoManager: CryptoManager
+    ): DataStore<UserDto> {
+        return DataStoreFactory.create(
+            serializer = UserProfileSerializer(cryptoManager = cryptoManager),
+            produceFile = {
+                appContext.dataStoreFile("user-profile.json")
+            },
+            corruptionHandler = null,
+            scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserPreferencesDatastore(
+        dataStore: DataStore<UserDto>
+    ): UserPreferencesDataStore {
+        return UserPreferencesImpl(
+            dataStore = dataStore
         )
     }
 

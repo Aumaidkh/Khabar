@@ -3,11 +3,11 @@ package com.snapp.khabar.feature_fetch_news.presentation.ui.comment
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.model.CommentModel
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.FetchAllCommentsForNews
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.FetchUserFromDataStoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidateCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.util.Result
 import com.snapp.khabar.feature_fetch_news.presentation.ui.comment.adapters.CommentsScreenEvents
@@ -21,7 +21,7 @@ class CommentsViewModel @Inject constructor(
     private val submitCommentUseCase: SubmitCommentUseCase,
     private val fetchAllCommentsForNews: FetchAllCommentsForNews,
     private val validateCommentUseCase: ValidateCommentUseCase,
-    private val datastoreManager: DatastoreManager
+    private val fetchUserFromDataStoreUseCase: FetchUserFromDataStoreUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(CommentState())
@@ -41,13 +41,13 @@ class CommentsViewModel @Inject constructor(
      * so that they can be attached to the comment later
      * */
     private fun populateUserState() {
-        datastoreManager.getProfileDetails().onEach { userDto ->
-            _userState.update {
-                userDto
+        viewModelScope.launch {
+            fetchUserFromDataStoreUseCase.invoke().also { userDto ->
+                _userState.update {
+                    userDto
+                }
             }
-        }.launchIn(
-            viewModelScope
-        )
+        }
     }
 
 

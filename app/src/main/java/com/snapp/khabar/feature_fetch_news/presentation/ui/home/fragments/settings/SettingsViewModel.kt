@@ -2,12 +2,12 @@ package com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.setti
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.DarkModeToggleUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.CheckIfDarkModeIsEnabledUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.CheckIfNotificationIsEnabledUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.NotificationsToggleUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.FetchUserFromDataStoreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val datastore: DatastoreManager,
+    // private val datastore: DatastoreManager,
+    private val fetchUserFromDataStoreUseCase: FetchUserFromDataStoreUseCase,
     private val signOutUseCase: SignOutUseCase,
     private val darkModeToggleUseCase: DarkModeToggleUseCase,
     private val notificationsToggleUseCase: NotificationsToggleUseCase,
@@ -94,22 +95,21 @@ class SettingsViewModel @Inject constructor(
     }
 
 
-
-    private fun toggleDarkMode(enabled: Boolean){
+    private fun toggleDarkMode(enabled: Boolean) {
         viewModelScope.launch {
             darkModeToggleUseCase.invoke(enabled)
             emitDarkModeState()
         }
     }
 
-    private fun toggleNotifications(enabled: Boolean){
+    private fun toggleNotifications(enabled: Boolean) {
         viewModelScope.launch {
             notificationsToggleUseCase.invoke(enabled)
             emitNotificationState()
         }
     }
 
-    private fun emitDarkModeState(){
+    private fun emitDarkModeState() {
         viewModelScope.launch {
             checkIfDarkModeIsEnabledUseCase.invoke().also {
                 _eventChannel.send(
@@ -121,7 +121,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private fun emitNotificationState(){
+    private fun emitNotificationState() {
         viewModelScope.launch {
             checkIfNotificationIsEnabledUseCase.invoke().also {
                 _eventChannel.send(
@@ -133,7 +133,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private fun handlePhoneNumberClick(){
+    private fun handlePhoneNumberClick() {
         viewModelScope.launch {
             _eventChannel.send(
                 SettingsUiEvent.PhoneEvent()
@@ -141,7 +141,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private fun handleEmailClick(){
+    private fun handleEmailClick() {
         viewModelScope.launch {
             _eventChannel.send(
                 SettingsUiEvent.EmailEvent()
@@ -149,7 +149,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private fun handlePrivacyPolicyClick(){
+    private fun handlePrivacyPolicyClick() {
         viewModelScope.launch {
             _eventChannel.send(SettingsUiEvent.PrivacyPolicyEvent())
         }
@@ -169,19 +169,31 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun setupScreenScreen() {
+//        viewModelScope.launch {
+//            datastore.getProfileDetails().onEach { userDto ->
+//                _state.update {
+//                    it.copy(
+//                        isLoading = false,
+//                        username = userDto.name ?: "No Name",
+//                        email = userDto.email ?: "abc@gmail.com",
+//                        imageUrl = userDto.photoUrl ?: "www.google.com",
+//                        userId = userDto.uid ?: "aafafa"
+//                    )
+//                }
+//
+//            }.launchIn(this)
         viewModelScope.launch {
-            datastore.getProfileDetails().onEach { userDto ->
+            fetchUserFromDataStoreUseCase.invoke().also { userDto ->
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        username = userDto.name ?: "No Name",
-                        email = userDto.email ?: "abc@gmail.com",
-                        imageUrl = userDto.photoUrl ?: "www.google.com",
-                        userId = userDto.uid ?: "aafafa"
+                        username = userDto.name ?: "",
+                        email = userDto.email ?: "",
+                        imageUrl = userDto.photoUrl ?: "",
+                        userId = userDto.uid ?: ""
                     )
                 }
-
-            }.launchIn(this)
+            }
         }
     }
 }

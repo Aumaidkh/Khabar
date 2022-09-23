@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.FetchUserFromDataStoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.UpdateUserUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.UploadProfilePhotoUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidationUseCases
@@ -22,7 +22,7 @@ private const val TAG = "ProfileViewModel"
 class ProfileViewModel @Inject constructor(
     private val validationUseCases: ValidationUseCases,
     private val updateUserUseCase: UpdateUserUseCase,
-    private val datastoreManager: DatastoreManager,
+    private val fetchUserFromDataStoreUseCase: FetchUserFromDataStoreUseCase,
     private val uploadProfilePhotoUseCase: UploadProfilePhotoUseCase
 ) : ViewModel() {
 
@@ -46,19 +46,33 @@ class ProfileViewModel @Inject constructor(
     /**
      * Initializes the state from the datastore
      * */
-    private fun initStateFromDataStore(){
-        datastoreManager.getProfileDetails().onEach { userDto ->
-            _state.update {
-                it.copy(
-                    userId = userDto.uid?:"",
-                    name = userDto.name?:"",
-                    email = userDto.email?:"",
-                    phone = userDto.phoneNumber?:"",
-                    gender = userDto.gender?.toGenderEnum(),
-                    imageUri = userDto.photoUrl?.toUri() ?: "".toUri()
-                )
+    private fun initStateFromDataStore() {
+//        datastoreManager.getProfileDetails().onEach { userDto ->
+//            _state.update {
+//                it.copy(
+//                    userId = userDto.uid?:"",
+//                    name = userDto.name?:"",
+//                    email = userDto.email?:"",
+//                    phone = userDto.phoneNumber?:"",
+//                    gender = userDto.gender?.toGenderEnum(),
+//                    imageUri = userDto.photoUrl?.toUri() ?: "".toUri()
+//                )
+//            }
+//        }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            fetchUserFromDataStoreUseCase.invoke().also { userDto ->
+                _state.update {
+                    it.copy(
+                        userId = userDto.uid ?: "",
+                        name = userDto.name ?: "",
+                        email = userDto.email ?: "",
+                        phone = userDto.phoneNumber ?: "",
+                        gender = userDto.gender?.toGenderEnum(),
+                        imageUri = userDto.photoUrl?.toUri() ?: "".toUri()
+                    )
+                }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     fun onEvent(event: EditProfileEvents) {
@@ -119,17 +133,30 @@ class ProfileViewModel @Inject constructor(
      * screen ensuring the input fields of the screen are prefilled
      * */
     private fun populateStateFromDataStore() {
-        datastoreManager.getProfileDetails().onEach { userDto ->
-            _eventFlow.emit(
-                EditProfileEvents.UiEvents.PrepopulateInputs(
-                    name = userDto.name ?: "",
-                    email = userDto.email ?: "",
-                    phone = userDto.phoneNumber ?: "",
-                    imageUri = userDto.photoUrl?.toUri() ?: "".toUri(),
-                    gender = userDto.gender?.toGenderEnum() ?: GenderEnum.Male
+//        datastoreManager.getProfileDetails().onEach { userDto ->
+//            _eventFlow.emit(
+//                EditProfileEvents.UiEvents.PrepopulateInputs(
+//                    name = userDto.name ?: "",
+//                    email = userDto.email ?: "",
+//                    phone = userDto.phoneNumber ?: "",
+//                    imageUri = userDto.photoUrl?.toUri() ?: "".toUri(),
+//                    gender = userDto.gender?.toGenderEnum() ?: GenderEnum.Male
+//                )
+//            )
+//        }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            fetchUserFromDataStoreUseCase.invoke().also { userDto ->
+                _eventFlow.emit(
+                    EditProfileEvents.UiEvents.PrepopulateInputs(
+                        name = userDto.name ?: "",
+                        email = userDto.email ?: "",
+                        phone = userDto.phoneNumber ?: "",
+                        imageUri = userDto.photoUrl?.toUri() ?: "".toUri(),
+                        gender = userDto.gender?.toGenderEnum() ?: GenderEnum.Male
+                    )
                 )
-            )
-        }.launchIn(viewModelScope)
+            }
+        }
     }
 
     /**
@@ -204,20 +231,22 @@ class ProfileViewModel @Inject constructor(
             }.launchIn(this)
         }
     }
+
     /**
      * Uploads the photo to storage and updates the state imageUri to the
      * url obtained after uploading the image*/
     private suspend fun uploadPhotoAndUpdateState() {
-        if (_state.value.imageUri != null && _state.value.imageUri.isLocalUri()){
-            uploadProfilePhotoUseCase.invoke(_state.value.userId,_state.value.imageUri!!).also { imageUrl ->
-                if (imageUrl != null) {
-                    _state.update {
-                        it.copy(
-                            imageUri = imageUrl.toUri()
-                        )
+        if (_state.value.imageUri != null && _state.value.imageUri.isLocalUri()) {
+            uploadProfilePhotoUseCase.invoke(_state.value.userId, _state.value.imageUri!!)
+                .also { imageUrl ->
+                    if (imageUrl != null) {
+                        _state.update {
+                            it.copy(
+                                imageUri = imageUrl.toUri()
+                            )
+                        }
                     }
                 }
-            }
         }
     }
 

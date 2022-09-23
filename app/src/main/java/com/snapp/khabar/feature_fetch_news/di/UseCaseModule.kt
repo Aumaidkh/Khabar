@@ -1,15 +1,12 @@
 package com.snapp.khabar.feature_fetch_news.di
 
-import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
 import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
 import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.repository.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.SaveUserIntoFirestoreUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.UpdateUserUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.UploadProfilePhotoUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +16,27 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
+
+    /**
+     * Save User Details*/
+    @Provides
+    @Singleton
+    fun provideSaveUserToDataStoreUseCase(
+        userPreferencesDataStore: UserPreferencesDataStore
+    ): SaveUserDataToDataStoreUseCase {
+        return SaveUserDataToDataStoreUseCase(userPreferencesDataStore)
+    }
+
+    /**
+     * Fetch User Details
+     * */
+    @Provides
+    @Singleton
+    fun provideFetchUserFromDataStoreUseCase(
+        userPreferencesDataStore: UserPreferencesDataStore
+    ): FetchUserFromDataStoreUseCase {
+        return FetchUserFromDataStoreUseCase(userPreferencesDataStore)
+    }
 
     /**
      * Upload Photo User Case
@@ -34,10 +52,9 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideUpdateUserUseCase(
-        repository: UserRepository,
-        datastoreManager: DatastoreManager
+        repository: UserRepository
     ): UpdateUserUseCase {
-        return UpdateUserUseCase(repository, datastoreManager)
+        return UpdateUserUseCase(repository)
     }
 
     @Provides

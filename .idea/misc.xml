@@ -13,7 +13,12 @@
         <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/activity_news_detail.xml" value="0.125" />
         <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/activity_splash.xml" value="0.264" />
         <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/bottom_sheet_news_details.xml" value="0.125" />
+        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/fragment_all_news.xml" value="0.125" />
+        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/fragment_bookmark.xml" value="0.125" />
+        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/fragment_home.xml" value="0.125" />
         <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/fragment_settings.xml" value="0.264" />
+        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/news_item_layout.xml" value="0.125" />
+        <entry key="..\:/Dell/Hopcape/Projects/Khabar/Khabar/app/src/main/res/layout/other_news_item_layout.xml" value="0.2" />
       </map>
     </option>
   </component>

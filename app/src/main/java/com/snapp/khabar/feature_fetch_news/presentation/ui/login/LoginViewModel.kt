@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthCredential
-import com.snapp.khabar.feature_fetch_news.data.local.DatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.SaveUserDataToDataStoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.SaveUserIntoFirestoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ class LoginViewModel @Inject constructor(
     private val authenticateUserWithGoogleUseCase: AuthenticateUserWithGoogleUseCase,
     private val saveUserIntoFirestoreUseCase: SaveUserIntoFirestoreUseCase,
     private val isUserAuthenticatedUseCase: CheckIfUserIsAuthenticatedUseCase,
-    private val datastoreManager: DatastoreManager
+    private val saveUserDataToDataStoreUseCase: SaveUserDataToDataStoreUseCase,
 ) : ViewModel() {
 
     /**
@@ -94,7 +94,7 @@ class LoginViewModel @Inject constructor(
      * Saving User Data to the local datastore*/
     private fun saveUserToDataStore(data: UserDto) {
         viewModelScope.launch {
-            datastoreManager.saveUserInfo(userDto = data)
+            saveUserDataToDataStoreUseCase.invoke(userDto = data)
         }
     }
 
