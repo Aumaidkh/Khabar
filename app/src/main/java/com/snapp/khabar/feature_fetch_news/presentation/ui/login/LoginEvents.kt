@@ -1,5 +1,6 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.login
 
+import android.util.Log
 import com.google.firebase.auth.AuthCredential
 
 sealed class LoginEvents{
@@ -9,4 +10,6 @@ sealed class LoginEvents{
      * Will be used to send check authentication event
      * */
     object CheckIfUserIsAlreadyAuthenticated: LoginEvents()
+
+    object SignUpClick: LoginEvents()
 }

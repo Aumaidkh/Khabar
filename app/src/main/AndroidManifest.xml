@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/splashScreenTheme">
         <activity
+            android:name=".feature_fetch_news.presentation.ui.sign_up.SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature_fetch_news.presentation.ui.home.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.Khabar" />
