@@ -8,7 +8,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:background="#FAFAFA"
+        android:background="@color/backgroundColor"
         android:layout_height="match_parent">
 
         <FrameLayout
@@ -81,10 +81,10 @@
                     <!--Toolbar-->
                     <RelativeLayout
                         android:id="@+id/toolbarlayout"
-                        android:layout_marginTop="40dp"
-                        android:layout_alignParentTop="true"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="20dp">
 
                         <include
                             android:id="@+id/btnBack"
