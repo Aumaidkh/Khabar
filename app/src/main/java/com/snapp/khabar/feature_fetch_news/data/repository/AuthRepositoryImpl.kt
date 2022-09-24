@@ -101,25 +101,4 @@ class AuthRepositoryImpl @Inject constructor(
         firebaseAuth.signOut()
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override suspend fun createUserWithEmailAndPassword(email: String, password: String): Flow<Result<UserDto?>> {
-        return callbackFlow<Result<UserDto?>> {
-            val onSuccessListener = OnSuccessListener<AuthResult> { result ->
-                launch {
-                    send(Result.Success(result.user.toUserDto()))
-                }
-            }
-
-            val onFailureListener = OnFailureListener {
-                launch {
-                    send(Result.Error(it.message.toString()))
-                }
-            }
-
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener(onSuccessListener)
-                .addOnFailureListener(onFailureListener)
-            awaitClose()
-        }.distinctUntilChanged()
-    }
 }

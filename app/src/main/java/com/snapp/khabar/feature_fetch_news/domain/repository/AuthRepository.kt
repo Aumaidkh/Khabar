@@ -15,5 +15,4 @@ interface AuthRepository {
 
     suspend fun signOut()
 
-    suspend fun createUserWithEmailAndPassword(email: String, password: String): Flow<Result<UserDto?>>
 }
