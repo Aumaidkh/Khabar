@@ -16,6 +16,17 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
+    /**
+     * Email And Password Auth Repository
+     * */
+    @Provides
+    @Singleton
+    fun provideEmailAndPasswordAuthRepository(
+        firebaseAuth: FirebaseAuth
+    ): EmailAndPasswordAuth {
+        return EmailAndPasswordAuthImpl(firebaseAuth)
+    }
+
     // Provide Remote Repository
     @Provides
     @Singleton

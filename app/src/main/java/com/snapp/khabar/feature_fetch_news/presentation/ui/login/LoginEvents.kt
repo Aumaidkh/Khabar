@@ -12,4 +12,14 @@ sealed class LoginEvents{
     object CheckIfUserIsAlreadyAuthenticated: LoginEvents()
 
     object SignUpClick: LoginEvents()
+
+    object LoginWithEmailAndPassword: LoginEvents()
+
+    data class OnEmailChanged(
+        val email: String
+    ): LoginEvents()
+
+    data class OnPasswordChanged(
+        val password: String
+    ): LoginEvents()
 }

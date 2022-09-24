@@ -160,6 +160,7 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:inputType="textEmailAddress"
+                            android:id="@+id/etEmail"
                             android:hint="Enter your email"
                             android:textColorHint="@color/secondary_text_color"
                             android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -41,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
     /**
      * Other Vars
      * */
+
     private val googleSignInResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
@@ -73,15 +75,29 @@ class LoginActivity : AppCompatActivity() {
          * */
         loginViewModel.onEvent(LoginEvents.CheckIfUserIsAlreadyAuthenticated)
         setupClicks()
+        setupInputFields()
     }
 
     private fun setupClicks(){
-        /**
-         * Sign Up Click Button
-         * */
-        binding.btnSignUp.setOnClickListener {
-            loginViewModel.onEvent(LoginEvents.SignUpClick)
+
+        binding.apply {
+
+            /**
+             * Sign Up Click Button
+             * */
+            btnSignUp.setOnClickListener {
+                loginViewModel.onEvent(LoginEvents.SignUpClick)
+            }
+
+            /**
+             * Sign In Button
+             * */
+            btnLogin.setOnClickListener {
+                loginViewModel.onEvent(LoginEvents.LoginWithEmailAndPassword)
+            }
         }
+
+
     }
 
     private fun initSignInButton() {
@@ -143,14 +159,19 @@ class LoginActivity : AppCompatActivity() {
          * Observing State
          * */
         lifecycleScope.launchWhenStarted {
-            loginViewModel.state.collect { state ->
-                if (state.isLoading){
+            loginViewModel.state.collect { _state ->
+                /**
+                 * Updating State
+                 * */
+                updateErrors(_state)
+
+                if (_state.isLoading){
                     Log.d(TAG, "consumeFlows: Loading")
                     binding.progressBar.visibility = View.VISIBLE
-                } else if (!state.isAuthenticated){
+                } else if (!_state.isAuthenticated){
                     Log.d(TAG, "consumeFlows: Not Authenticated")
                     binding.progressBar.visibility = View.GONE
-                } else if(state.isAuthenticated) {
+                } else if(_state.isAuthenticated) {
                     Log.d(TAG, "consumeFlows: Authenticated")
                     binding.progressBar.visibility = View.GONE
                     Intent(this@LoginActivity,HomeActivity::class.java).also {
@@ -158,6 +179,28 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setupInputFields(){
+        binding.apply {
+            /**
+             * E-Mail Field*/
+            etEmail.doOnTextChanged { email, _, _, _ ->
+                loginViewModel.onEvent(LoginEvents.OnEmailChanged(email = email.toString()))
+            }
+            /**
+             * Password Field*/
+            etPassword.doOnTextChanged { password, _, _, _ ->
+                loginViewModel.onEvent(LoginEvents.OnPasswordChanged(password = password.toString()))
+            }
+        }
+    }
+
+    private fun updateErrors(state: LoginScreenState){
+        binding.apply {
+            etEmail.error = state.emailError
+            etPassword.error = state.passwordError
         }
     }
 

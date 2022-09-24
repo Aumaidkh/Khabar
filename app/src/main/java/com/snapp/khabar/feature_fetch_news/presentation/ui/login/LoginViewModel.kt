@@ -8,8 +8,10 @@ import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.SignInWithEmailAndPasswordUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.SaveUserDataToDataStoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.SaveUserIntoFirestoreUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidationUseCases
 import com.snapp.khabar.feature_fetch_news.domain.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -22,6 +24,8 @@ class LoginViewModel @Inject constructor(
     private val saveUserIntoFirestoreUseCase: SaveUserIntoFirestoreUseCase,
     private val isUserAuthenticatedUseCase: CheckIfUserIsAuthenticatedUseCase,
     private val saveUserDataToDataStoreUseCase: SaveUserDataToDataStoreUseCase,
+    private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
+    private val validationUseCases: ValidationUseCases
 ) : ViewModel() {
 
     /**
@@ -39,6 +43,30 @@ class LoginViewModel @Inject constructor(
 
     fun onEvent(event: LoginEvents) {
         when (event) {
+
+            /**
+             * On Email Changed
+             * */
+            is LoginEvents.OnEmailChanged -> {
+                _state.update {
+                    it.copy(
+                        email = event.email
+                    )
+                }
+                updateErrors()
+            }
+
+            /**
+             * On Password Changed
+             * */
+            is LoginEvents.OnPasswordChanged -> {
+                _state.update {
+                    it.copy(
+                        password = event.password
+                    )
+                }
+                updateErrors()
+            }
 
             /**
              * Login in the user through google */
@@ -63,6 +91,69 @@ class LoginViewModel @Inject constructor(
                     )
                 }
             }
+
+            /**
+             * Logging in with email and password
+             * */
+            is LoginEvents.LoginWithEmailAndPassword -> {
+                validateFields(
+                    email = _state.value.email,
+                    password = _state.value.password
+                )
+            }
+        }
+    }
+
+    private fun validateFields(email: String,password: String){
+        val emailResult = validationUseCases.validateEmailUseCase.execute(email)
+        val passwordResult = validationUseCases.validatePasswordUseCase.invoke(password,password)
+
+        val fieldHasError = listOf(
+            emailResult,
+            passwordResult
+        ).any {
+            !it.successful
+        }
+
+        if (fieldHasError){
+            return
+        }
+
+        signInUserWithEmailAndPassword(email, password)
+    }
+
+    private fun signInUserWithEmailAndPassword(email: String, password: String) {
+        viewModelScope.launch {
+            signInWithEmailAndPasswordUseCase.invoke(
+                email = email,
+                password = password
+            ).onEach { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        _state.update {
+                            it.copy(isLoading = true, isAuthenticated = false)
+                        }
+                    }
+
+                    is Result.Success -> {
+                        _state.update {
+                            it.copy(isLoading = false, isAuthenticated = true)
+                        }
+                        // Save the user data in datastore here
+                        saveUserDataToDataStoreUseCase.invoke(result.data!!)
+                    }
+
+                    is Result.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false, isAuthenticated = false
+                            )
+                        }
+                        _eventFlow.emit(LoginUiEvents.ShowSnackBar(result.message.toString()))
+                    }
+                }
+
+            }.launchIn(this)
         }
     }
 
@@ -181,6 +272,40 @@ class LoginViewModel @Inject constructor(
                 }
             }.launchIn(this)
         }
+    }
+
+
+    /**
+     * Update Errors if there are any
+     * */
+    private fun updateErrors(){
+
+        /**
+         * Re validating Email*/
+        validationUseCases.validateEmailUseCase.execute(
+            _state.value.email
+        ).also { result ->
+            _state.update {
+                it.copy(
+                    emailError = result.errorMessage
+                )
+            }
+        }
+
+        /**
+         * Re Validating Password*/
+        validationUseCases.validatePasswordUseCase.invoke(
+            _state.value.password,
+            _state.value.password
+        ).also { result ->
+            _state.update {
+                it.copy(
+                    passwordError = result.errorMessage
+                )
+            }
+        }
+
+
     }
 
 }

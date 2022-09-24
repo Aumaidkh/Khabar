@@ -7,6 +7,7 @@ import com.snapp.khabar.feature_fetch_news.domain.repository.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CreateUserWithEmailAndPasswordUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.SignInWithEmailAndPasswordUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.*
 import dagger.Module
 import dagger.Provides
@@ -18,6 +19,17 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
 
+    /**
+     * Sign in User With Email Password
+     * */
+    @Provides
+    @Singleton
+    fun provideSignInUserWithEmailPasswordUseCase(
+        repository: EmailAndPasswordAuth
+    ): SignInWithEmailAndPasswordUseCase {
+        return SignInWithEmailAndPasswordUseCase(repository)
+    }
+
 
     /**
      * Create User With Email Password
@@ -25,7 +37,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideCreateUserWithEmailPasswordUseCase(
-        repository: AuthRepository
+        repository: EmailAndPasswordAuth
     ): CreateUserWithEmailAndPasswordUseCase {
         return CreateUserWithEmailAndPasswordUseCase(repository)
     }
