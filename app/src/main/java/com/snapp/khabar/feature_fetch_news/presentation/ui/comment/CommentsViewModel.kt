@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
-import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.model.CommentModel
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.FetchAllCommentsForNews
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.remote.FetchAllCommentsForNews
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.remote.SubmitCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.FetchUserFromDataStoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidateCommentUseCase
 import com.snapp.khabar.feature_fetch_news.domain.util.Result

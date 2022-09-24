@@ -5,10 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthCredential
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
-import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.SignInWithEmailAndPasswordUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.AuthUseCases
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.SaveUserDataToDataStoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.SaveUserIntoFirestoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidationUseCases
@@ -20,11 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authenticateUserWithGoogleUseCase: AuthenticateUserWithGoogleUseCase,
+    private val authUseCases: AuthUseCases,
     private val saveUserIntoFirestoreUseCase: SaveUserIntoFirestoreUseCase,
-    private val isUserAuthenticatedUseCase: CheckIfUserIsAuthenticatedUseCase,
     private val saveUserDataToDataStoreUseCase: SaveUserDataToDataStoreUseCase,
-    private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
     private val validationUseCases: ValidationUseCases
 ) : ViewModel() {
 
@@ -124,7 +120,7 @@ class LoginViewModel @Inject constructor(
 
     private fun signInUserWithEmailAndPassword(email: String, password: String) {
         viewModelScope.launch {
-            signInWithEmailAndPasswordUseCase.invoke(
+            authUseCases.signInWithEmailAndPassword.invoke(
                 email = email,
                 password = password
             ).onEach { result ->
@@ -163,7 +159,7 @@ class LoginViewModel @Inject constructor(
      * */
     private fun signInWithGoogle(authCredential: AuthCredential) {
         viewModelScope.launch {
-            authenticateUserWithGoogleUseCase.invoke(authCredential).onEach { result ->
+            authUseCases.authenticateUserWithGoogle.invoke(authCredential).onEach { result ->
                 when (result) {
                     is Result.Loading -> {
                         _state.update {
@@ -238,7 +234,7 @@ class LoginViewModel @Inject constructor(
      * */
     private fun ifUserAlreadyAuthenticated(){
         viewModelScope.launch {
-            isUserAuthenticatedUseCase.invoke().onEach { result ->
+            authUseCases.checkIfUserIsAuthenticated.invoke().onEach { result ->
                 when(result){
                     is Result.Loading -> {
                         _state.update {

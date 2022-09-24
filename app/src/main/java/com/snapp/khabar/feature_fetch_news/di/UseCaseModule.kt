@@ -1,13 +1,21 @@
 package com.snapp.khabar.feature_fetch_news.di
 
-import com.snapp.khabar.feature_fetch_news.data.repository.AuthenticateUserWithGoogleUseCase
-import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
-import com.snapp.khabar.feature_fetch_news.data.repository.SubmitCommentUseCase
-import com.snapp.khabar.feature_fetch_news.domain.repository.*
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.AuthenticateUserWithGoogleUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.SignOutUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.remote.SubmitCommentUseCase
+import com.snapp.khabar.feature_fetch_news.domain.repository.auth.AuthRepository
+import com.snapp.khabar.feature_fetch_news.domain.repository.auth.EmailAndPasswordAuth
+import com.snapp.khabar.feature_fetch_news.domain.repository.news.PhotoRepository
+import com.snapp.khabar.feature_fetch_news.domain.repository.news.RemoteCommentsRepository
+import com.snapp.khabar.feature_fetch_news.domain.repository.news.RemoteNewsRepository
+import com.snapp.khabar.feature_fetch_news.domain.repository.user.UserPreferencesDataStore
+import com.snapp.khabar.feature_fetch_news.domain.repository.user.UserRepository
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.*
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CheckIfUserIsAuthenticatedUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CreateUserWithEmailAndPasswordUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.SignInWithEmailAndPasswordUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.remote.FetchAllCommentsForNews
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.remote.FetchNewsFromFirebaseFirestoreUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.user.*
 import dagger.Module
 import dagger.Provides
@@ -19,28 +27,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
 
-    /**
-     * Sign in User With Email Password
-     * */
-    @Provides
-    @Singleton
-    fun provideSignInUserWithEmailPasswordUseCase(
-        repository: EmailAndPasswordAuth
-    ): SignInWithEmailAndPasswordUseCase {
-        return SignInWithEmailAndPasswordUseCase(repository)
-    }
 
-
-    /**
-     * Create User With Email Password
-     * */
-    @Provides
-    @Singleton
-    fun provideCreateUserWithEmailPasswordUseCase(
-        repository: EmailAndPasswordAuth
-    ): CreateUserWithEmailAndPasswordUseCase {
-        return CreateUserWithEmailAndPasswordUseCase(repository)
-    }
 
     /**
      * Save User Details*/
@@ -82,17 +69,7 @@ object UseCaseModule {
         return UpdateUserUseCase(repository)
     }
 
-    @Provides
-    @Singleton
-    fun provideSignOutUseCase(repository: AuthRepository): SignOutUseCase {
-        return SignOutUseCase(repository)
-    }
 
-    @Provides
-    @Singleton
-    fun provideCheckIfUserIsAuthenticatedUseCase(repository: AuthRepository): CheckIfUserIsAuthenticatedUseCase {
-        return CheckIfUserIsAuthenticatedUseCase(repository)
-    }
 
     @Provides
     @Singleton
@@ -101,11 +78,6 @@ object UseCaseModule {
     }
 
 
-    @Provides
-    @Singleton
-    fun provideAuthenticateUserUseCase(repository: AuthRepository): AuthenticateUserWithGoogleUseCase {
-        return AuthenticateUserWithGoogleUseCase(repository)
-    }
 
 
     @Provides

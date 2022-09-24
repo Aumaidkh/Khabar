@@ -9,7 +9,7 @@ import com.snapp.khabar.feature_fetch_news.data.encryption.UserProfileSerializer
 import com.snapp.khabar.feature_fetch_news.data.local.UserPreferencesImpl
 import com.snapp.khabar.feature_fetch_news.data.local.UserSettingsDatastoreManager
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
-import com.snapp.khabar.feature_fetch_news.domain.repository.UserPreferencesDataStore
+import com.snapp.khabar.feature_fetch_news.domain.repository.user.UserPreferencesDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

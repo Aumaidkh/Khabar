@@ -1,7 +1,6 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.home
 
 import androidx.lifecycle.*
-import com.snapp.khabar.feature_fetch_news.core.Constants.API_KEY
 import com.snapp.khabar.feature_fetch_news.data.local.entities.NewsEntity
 import com.snapp.khabar.feature_fetch_news.data.util.Constants.ALL_NEWS_CATEGORY
 import com.snapp.khabar.feature_fetch_news.data.util.Constants.BUSINESS_CATEGORY
@@ -9,9 +8,13 @@ import com.snapp.khabar.feature_fetch_news.data.util.Constants.POLITICS_CATEGORY
 import com.snapp.khabar.feature_fetch_news.data.util.Constants.SCIENCE_CATEGORY
 import com.snapp.khabar.feature_fetch_news.data.util.Constants.SPORTS_CATEGORY
 import com.snapp.khabar.feature_fetch_news.data.util.Constants.TECH_CATEGORY
-import com.snapp.khabar.feature_fetch_news.domain.model.ArticleModel
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.*
-import com.snapp.khabar.feature_fetch_news.domain.util.Result
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.local.DeleteNewsEntityUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.local.GetAllNewsFromLocalDatabaseUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.local.InsertNewsEntityUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.remote.FetchAllNewsUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.remote.FetchHeadlinesUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.remote.FetchNewsFromFirebaseFirestoreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

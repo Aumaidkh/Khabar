@@ -1,10 +1,9 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.sign_up
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.snapp.khabar.feature_fetch_news.domain.repository.UserPreferencesDataStore
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.CreateUserWithEmailAndPasswordUseCase
+import com.snapp.khabar.feature_fetch_news.domain.repository.user.UserPreferencesDataStore
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.AuthUseCases
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.validation.ValidationUseCases
 import com.snapp.khabar.feature_fetch_news.domain.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,7 @@ import javax.inject.Inject
 private const val TAG = "SignUpViewModel"
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val createUserWithEmailAndPasswordUseCase: CreateUserWithEmailAndPasswordUseCase,
+    private val authUseCases: AuthUseCases,
     private val validationUseCases: ValidationUseCases,
     private val userPreferencesDataStore: UserPreferencesDataStore
 ): ViewModel() {
@@ -107,7 +106,7 @@ class SignUpViewModel @Inject constructor(
         email: String,
         password: String
     ) {
-        createUserWithEmailAndPasswordUseCase.invoke(
+        authUseCases.createUserWithEmailAndPassword.invoke(
             email = email,
             password = password
         ).onEach { result ->

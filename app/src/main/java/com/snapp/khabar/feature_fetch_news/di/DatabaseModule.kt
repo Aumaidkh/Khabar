@@ -3,11 +3,11 @@ package com.snapp.khabar.feature_fetch_news.di
 import android.app.Application
 import androidx.room.Room
 import com.snapp.khabar.feature_fetch_news.data.local.entities.NewsDataBase
-import com.snapp.khabar.feature_fetch_news.data.repository.LocalRepositoryImpl
-import com.snapp.khabar.feature_fetch_news.domain.repository.LocalRepository
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.DeleteNewsEntityUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.InsertNewsEntityUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.GetAllNewsFromLocalDatabaseUseCase
+import com.snapp.khabar.feature_fetch_news.data.repository.news.LocalRepositoryImpl
+import com.snapp.khabar.feature_fetch_news.domain.repository.news.LocalRepository
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.local.DeleteNewsEntityUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.local.InsertNewsEntityUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.local.GetAllNewsFromLocalDatabaseUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,7 +39,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesDeleteNewsEntity(localRepository: LocalRepository) : DeleteNewsEntityUseCase{
+    fun providesDeleteNewsEntity(localRepository: LocalRepository) : DeleteNewsEntityUseCase {
         return DeleteNewsEntityUseCase(localRepository)
     }
 

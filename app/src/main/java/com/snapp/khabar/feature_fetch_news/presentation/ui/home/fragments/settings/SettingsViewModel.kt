@@ -2,7 +2,7 @@ package com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.setti
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.snapp.khabar.feature_fetch_news.data.repository.SignOutUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.auth.SignOutUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.DarkModeToggleUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.CheckIfDarkModeIsEnabledUseCase
 import com.snapp.khabar.feature_fetch_news.domain.use_cases.settings.CheckIfNotificationIsEnabledUseCase

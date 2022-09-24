@@ -1,7 +1,7 @@
 package com.snapp.khabar.feature_fetch_news.domain.use_cases.user
 
 import android.net.Uri
-import com.snapp.khabar.feature_fetch_news.domain.repository.PhotoRepository
+import com.snapp.khabar.feature_fetch_news.domain.repository.news.PhotoRepository
 import javax.inject.Inject
 
 class UploadProfilePhotoUseCase @Inject constructor(

@@ -2,11 +2,11 @@ package com.snapp.khabar.feature_fetch_news.di
 
 import com.snapp.khabar.feature_fetch_news.core.Constants.BASE_URL
 import com.snapp.khabar.feature_fetch_news.data.remote.NewsApi
-import com.snapp.khabar.feature_fetch_news.data.repository.NewsRepositoryImpl
-import com.snapp.khabar.feature_fetch_news.domain.repository.NewsRepository
-import com.snapp.khabar.feature_fetch_news.domain.repository.RemoteNewsRepository
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.FetchAllNewsUseCase
-import com.snapp.khabar.feature_fetch_news.domain.use_cases.FetchHeadlinesUseCase
+import com.snapp.khabar.feature_fetch_news.data.repository.news.NewsRepositoryImpl
+import com.snapp.khabar.feature_fetch_news.domain.repository.news.NewsRepository
+import com.snapp.khabar.feature_fetch_news.domain.repository.news.RemoteNewsRepository
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.remote.FetchAllNewsUseCase
+import com.snapp.khabar.feature_fetch_news.domain.use_cases.news.remote.FetchHeadlinesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

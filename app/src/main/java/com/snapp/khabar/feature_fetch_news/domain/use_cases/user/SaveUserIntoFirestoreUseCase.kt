@@ -2,7 +2,7 @@ package com.snapp.khabar.feature_fetch_news.domain.use_cases.user
 
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.UserDto
 import com.snapp.khabar.feature_fetch_news.data.util.UserResult
-import com.snapp.khabar.feature_fetch_news.domain.repository.UserRepository
+import com.snapp.khabar.feature_fetch_news.domain.repository.user.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
