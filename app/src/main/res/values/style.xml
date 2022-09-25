@@ -40,5 +40,11 @@
         <item name="android:textSize">11sp</item>
         <item name="rippleColor">@color/orange</item>
     </style>
+    
+    <!--Transparent Status bar image view-->
+    <style name="TransParentStatusBarImage" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 
 </resources>
