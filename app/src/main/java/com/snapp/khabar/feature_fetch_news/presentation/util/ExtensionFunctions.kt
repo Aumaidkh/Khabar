@@ -1,7 +1,10 @@
 package com.snapp.khabar.feature_fetch_news.presentation.util
 
 import android.app.Activity
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
+import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import com.snapp.khabar.feature_fetch_news.presentation.ui.edit_account.GenderEnum
 import java.text.SimpleDateFormat
@@ -43,4 +46,13 @@ fun Activity.enableNightMode(isEnabled: Boolean) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
     }
+}
+
+
+/**
+ * Make status bar transparent
+ * */
+fun Activity.showTransparentStatusBar(){
+    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    window.statusBarColor = Color.TRANSPARENT
 }

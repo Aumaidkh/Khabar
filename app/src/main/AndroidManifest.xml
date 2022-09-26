@@ -24,7 +24,7 @@
             android:theme="@style/Theme.Khabar" />
         <activity
             android:name=".feature_fetch_news.presentation.ui.news_detail.NewsDetailActivity"
-            android:theme="@style/NewsDetailsTheme" />
+            android:theme="@style/DetailsTheme" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.Khabar" />
