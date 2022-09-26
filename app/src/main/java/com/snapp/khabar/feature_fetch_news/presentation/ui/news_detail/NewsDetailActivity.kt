@@ -1,9 +1,11 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.news_detail
 
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.net.toUri
 import androidx.navigation.navArgs
 import com.bumptech.glide.Glide
 import com.snapp.khabar.R
@@ -43,6 +45,14 @@ class NewsDetailActivity : DataBindingActivity<ActivityNewsDetailBinding>(R.layo
            backKey.setOnClickListener {
                finish()
            }
+
+           tvUrl.setOnClickListener {
+               Intent(Intent.ACTION_VIEW).apply {
+                   data = tvUrl.text.toString().toUri()
+               }.also {
+                   startActivity(it)
+               }
+           }
        }
     }
 
@@ -58,6 +68,8 @@ class NewsDetailActivity : DataBindingActivity<ActivityNewsDetailBinding>(R.layo
 
             // Load data in webview
             tvNewsDesc.text = item.desc
+
+            tvUrl.text = getString(R.string.url_with_place_holder,item.url)
 
             // Setting image through glide
             Glide.with(this@NewsDetailActivity)

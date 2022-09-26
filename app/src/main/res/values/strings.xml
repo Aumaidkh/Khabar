@@ -7,5 +7,6 @@
     <string name="are_you_sure_to">Are you sure you want to logout?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="url_with_place_holder">Url: <u>%1$s</u></string>
+    <string name="url_with_place_holder">Source: <u>%1$s</u></string>
+    <string name="author_with_place_holder">Author: <u>%1$s</u></string>
 </resources>

@@ -15,7 +15,7 @@
 
 
     <!--Night Theme Colors-->
-    <color name="backgroundColor">#AB000000</color>
+    <color name="backgroundColor">#121212</color>
     <color name="newsCardBackgroundColor">#A4131313</color>
     <color name="headingTextColor">#DEFFFFFF</color>
     <color name="descriptionTextColor">#ABFFFFFF</color>
