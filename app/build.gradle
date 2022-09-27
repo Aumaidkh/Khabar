@@ -113,4 +113,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-drive:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:20.3.0'
 
+    // Justified Text View
+    implementation 'com.codesgood:justifiedtextview:1.1.0'
+
 }

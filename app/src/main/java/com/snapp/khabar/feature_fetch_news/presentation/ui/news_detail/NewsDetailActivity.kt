@@ -2,7 +2,6 @@ package com.snapp.khabar.feature_fetch_news.presentation.ui.news_detail
 
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.net.toUri
@@ -13,6 +12,7 @@ import com.snapp.khabar.databinding.ActivityNewsDetailBinding
 import com.snapp.khabar.feature_fetch_news.core.DataBindingActivity
 import com.snapp.khabar.feature_fetch_news.domain.model.ArticleModel
 import com.snapp.khabar.feature_fetch_news.presentation.util.getFormattedTime
+import com.snapp.khabar.feature_fetch_news.presentation.util.openIntentInBrowser
 
 
 class NewsDetailActivity : DataBindingActivity<ActivityNewsDetailBinding>(R.layout.activity_news_detail) {
@@ -23,7 +23,7 @@ class NewsDetailActivity : DataBindingActivity<ActivityNewsDetailBinding>(R.layo
         val newsItem = newsArgs.newsItem
 
         // Setting onClick Listeners
-        setupOnClickListeners()
+        setupOnClickListeners(newsItem)
 
 
         // Setting data on widgets
@@ -39,7 +39,7 @@ class NewsDetailActivity : DataBindingActivity<ActivityNewsDetailBinding>(R.layo
     }
 
 
-    private fun setupOnClickListeners() {
+    private fun setupOnClickListeners(newsItem: ArticleModel) {
        binding.apply {
            // Adding back button functionality
            backKey.setOnClickListener {
@@ -47,11 +47,7 @@ class NewsDetailActivity : DataBindingActivity<ActivityNewsDetailBinding>(R.layo
            }
 
            tvUrl.setOnClickListener {
-               Intent(Intent.ACTION_VIEW).apply {
-                   data = tvUrl.text.toString().toUri()
-               }.also {
-                   startActivity(it)
-               }
+               openIntentInBrowser(newsItem.url)
            }
        }
     }
