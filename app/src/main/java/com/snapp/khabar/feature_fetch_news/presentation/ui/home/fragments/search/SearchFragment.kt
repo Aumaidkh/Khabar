@@ -1,66 +1,113 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.search
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageButton
 import androidx.core.widget.doOnTextChanged
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.snapp.khabar.R
-import com.snapp.khabar.feature_fetch_news.domain.model.ArticleModel
+import com.snapp.khabar.databinding.FragmentSearchBinding
 import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
+@AndroidEntryPoint
+class SearchFragment : BaseFragment(2) {
 
-class SearchFragment:BaseFragment(2) {
+    /**
+     * Binding Vars
+     * */
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
+
+    /**
+     * ViewModels
+     * */
+    private val viewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
 
-        val backBtn = view.findViewById<ImageButton>(R.id.btnBack)
-        backBtn.setOnClickListener {
-            findNavController().navigateUp()
-        }
+        setupClickListeners()
 
-        setupResultsRecyclerView(view)
+        consumeFlows()
 
-        setupSearchView(view)
+        setupResultsRecyclerView()
 
-        return view
+        setupSearchView()
+
+        return binding.root
     }
 
-    private fun setupSearchView(view: View) {
-        val searchView = view.findViewById<EditText>(R.id.etSearch)
+    private fun setupClickListeners() {
+        binding.apply {
+            /**
+             * Back Button
+             * */
+            btnBack.setOnClickListener {
+                viewModel.onEvent(SearchEvents.Actions.ActionBack)
+            }
 
-        searchView.doOnTextChanged { text, start, before, count ->
-            Handler(Looper.getMainLooper()).postDelayed({
-                newsAdapter.submitData(getResultsFound(text.toString()))
-            },700)
         }
-
     }
 
-    private fun getResultsFound(query: String?): List<ArticleModel>{
-        if (query != null){
-            val numberOfCharsToCompare = query.length
-            return emptyList()
+    private fun setupSearchView() {
+        binding.etSearch.doOnTextChanged { text, _, _, _ ->
+            viewModel.onEvent(SearchEvents.Actions.OnSearchQueryChanged(text.toString()))
         }
-        return emptyList()
     }
 
-    private fun setupResultsRecyclerView(view: View) {
-        val rvNews = view.findViewById<RecyclerView>(R.id.rvNews)
-        rvNews.adapter = newsAdapter
-        rvNews.layoutManager = LinearLayoutManager(context)
+
+    private fun setupResultsRecyclerView() {
+
+        binding.rvNews.apply {
+            adapter = newsAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    /**
+     * Consuming Flows From ViewModel
+     * */
+    private fun consumeFlows() {
+        /**
+         * Collecting Events
+         * */
+        lifecycleScope.launchWhenStarted {
+            viewModel.eventFlow.collect { event ->
+                when (event) {
+                    is SearchEvents.UiEvents.CloseScreen -> {
+                        findNavController().navigateUp()
+                    }
+                }
+            }
+        }
+
+        /**
+         * Collecting State
+         * */
+        lifecycleScope.launchWhenStarted {
+            viewModel.results.collect { state ->
+                newsAdapter.submitData(state.searchResults)
+            }
+        }
+    }
+
+    /**
+     * Freeing up resources
+     * */
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

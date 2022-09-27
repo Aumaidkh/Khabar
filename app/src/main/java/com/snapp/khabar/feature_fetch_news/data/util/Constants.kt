@@ -24,4 +24,6 @@ object Constants {
     // Firestore collections
     const val USERS_COLLECTION = "user"
 
+    const val SEARCH_BY_TITLE = "title"
+
 }

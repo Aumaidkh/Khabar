@@ -14,6 +14,7 @@ interface NewsDao{
 
     @Query("SELECT * FROM EntityTable")
     fun getAllNewsEntities(): Flow<List<NewsEntity>>
+
 }
 
 

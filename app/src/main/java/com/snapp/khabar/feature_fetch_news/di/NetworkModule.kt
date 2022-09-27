@@ -49,19 +49,4 @@ object NetworkModule {
     }
 
 
-    // Injecting Use cases
-    // Provide Fetch News Use Case
-    @Provides
-    @Singleton
-    fun provideFetchUseCase(repository: NewsRepository): FetchAllNewsUseCase {
-        return FetchAllNewsUseCase(repository)
-    }
-
-    // Provide Fetch Headlines Use Case
-    @Provides
-    @Singleton
-    fun provideHeadlinesUseCase(repository: RemoteNewsRepository): FetchHeadlinesUseCase {
-        return FetchHeadlinesUseCase(repository)
-    }
-
 }

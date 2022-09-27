@@ -78,24 +78,4 @@ object UseCaseModule {
     }
 
 
-
-
-    @Provides
-    @Singleton
-    fun provideFetchNewsFromFirestoreUseCase(repository: RemoteNewsRepository): FetchNewsFromFirebaseFirestoreUseCase {
-        return FetchNewsFromFirebaseFirestoreUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideFetchCommentsFromFirestoreUseCase(repository: RemoteCommentsRepository): FetchAllCommentsForNews {
-        return FetchAllCommentsForNews(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSubmitCommentUseCase(repository: RemoteCommentsRepository): SubmitCommentUseCase {
-        return SubmitCommentUseCase(repository)
-    }
-
 }

@@ -78,7 +78,6 @@ class NewsDetailActivity :
         }
     }
 
-
     private fun setDataOnUi(item: ArticleModel?) {
         binding.apply {
             if (item == null) {
