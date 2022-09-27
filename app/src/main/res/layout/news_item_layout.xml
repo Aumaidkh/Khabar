@@ -28,7 +28,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:background="@drawable/bottom_start_rounded_corner_shape"
-        android:layout_height="110dp">
+        android:layout_height="wrap_content">
 
         <!--Headline-->
         <TextView
@@ -83,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:paddingEnd="8dp"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal">
 
             <!--Comments Icon-->
@@ -91,7 +92,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_margin="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@color/newsCardBackgroundColor"
                 android:src="@drawable/ic_comment_dots_svgrepo_com"
                 app:tint="@color/orange" />

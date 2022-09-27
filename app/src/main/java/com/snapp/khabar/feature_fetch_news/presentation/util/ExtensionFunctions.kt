@@ -1,6 +1,7 @@
 package com.snapp.khabar.feature_fetch_news.presentation.util
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -74,7 +75,7 @@ fun Activity.openIntentInBrowser(url: String){
 /**
  * Open Up Share Intent
  * */
-fun Activity.showShareIntent(link: String){
+fun Context.showShareIntent(link: String){
     Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_SUBJECT,"Subject Here")

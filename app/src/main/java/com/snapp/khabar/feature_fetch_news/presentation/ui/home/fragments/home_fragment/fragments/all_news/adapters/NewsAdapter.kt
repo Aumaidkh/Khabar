@@ -20,6 +20,7 @@ import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.bookma
 import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.home_fragment.HomeFragmentDirections
 import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.search.SearchFragmentDirections
 import com.snapp.khabar.feature_fetch_news.presentation.util.getFormattedTime
+import com.snapp.khabar.feature_fetch_news.presentation.util.showShareIntent
 
 class NewsAdapter(
     val adapterParent: Int,
@@ -68,6 +69,15 @@ class NewsAdapter(
                     itemView.context.startActivity(it)
                 }
 
+            }
+
+            /**
+             * Share Button Listener
+             * */
+            shareBtn.setOnClickListener {
+                itemView.context.showShareIntent(
+                    news.url
+                )
             }
         }
 
