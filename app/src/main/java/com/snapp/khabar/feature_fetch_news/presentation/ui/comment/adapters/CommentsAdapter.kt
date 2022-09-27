@@ -25,6 +25,8 @@ class CommentsAdapter: RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>()
         private val ivCommentImage: ImageView = itemView.findViewById(R.id.ivCommentImage)
         /*Binding Timestamp*/
         private val tvTimestamp: TextView = itemView.findViewById(R.id.tvTimeStamp)
+        /*See More Button*/
+        private val tvSeeMore: TextView = itemView.findViewById(R.id.seeMore)
 
         fun bind(commentModel: CommentModel){
             tvName.text = commentModel.name
@@ -36,6 +38,10 @@ class CommentsAdapter: RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>()
                 .placeholder(R.drawable.user)
                 .error(R.drawable.user)
                 .into(ivCommentImage)
+
+            tvSeeMore.setOnClickListener {
+                tvComment.maxLines = 20
+            }
         }
     }
 
