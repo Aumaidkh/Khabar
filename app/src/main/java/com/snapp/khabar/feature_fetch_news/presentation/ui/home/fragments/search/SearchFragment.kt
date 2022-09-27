@@ -1,6 +1,7 @@
 package com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,7 +98,17 @@ class SearchFragment : BaseFragment(2) {
          * */
         lifecycleScope.launchWhenStarted {
             viewModel.results.collect { state ->
-                newsAdapter.submitData(state.searchResults)
+
+                if (state.searchResults.isEmpty()) {
+                    binding.errorLayout.visibility = View.VISIBLE
+
+                } else {
+                    binding.apply {
+                        errorLayout.visibility = View.GONE
+                        rvNews.visibility = View.VISIBLE
+                    }
+                    newsAdapter.submitData(state.searchResults)
+                }
             }
         }
     }
@@ -111,3 +122,5 @@ class SearchFragment : BaseFragment(2) {
     }
 
 }
+
+private const val TAG = "SearchFragment"
