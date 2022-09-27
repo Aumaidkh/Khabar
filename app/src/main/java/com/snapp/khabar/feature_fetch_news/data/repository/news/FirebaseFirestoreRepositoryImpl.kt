@@ -32,7 +32,6 @@ class FirebaseFirestoreRepositoryImpl @Inject constructor(
             .get()
             .await()
             .map {
-                Log.d(TAG, "Article: ${it.toArticleDto()}")
                 it.toArticleDto()
             }
     }
