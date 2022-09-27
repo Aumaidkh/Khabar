@@ -8,6 +8,7 @@ import android.os.Build
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.toUri
+import com.google.android.material.snackbar.Snackbar
 import com.snapp.khabar.feature_fetch_news.presentation.ui.edit_account.GenderEnum
 import java.text.SimpleDateFormat
 import java.util.*
@@ -68,4 +69,25 @@ fun Activity.openIntentInBrowser(url: String){
     }.also {
         startActivity(it)
     }
+}
+
+/**
+ * Open Up Share Intent
+ * */
+fun Activity.showShareIntent(link: String){
+    Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_SUBJECT,"Subject Here")
+        putExtra(Intent.EXTRA_TEXT,link)
+    }.also {
+        startActivity(it)
+    }
+}
+
+
+/**
+ * Shows Snack Bar
+ * */
+fun View.showSnackBar(message: String){
+    Snackbar.make(this,message,Snackbar.LENGTH_SHORT).show()
 }
