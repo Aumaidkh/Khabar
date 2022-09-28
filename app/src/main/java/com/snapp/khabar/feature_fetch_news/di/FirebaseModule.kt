@@ -1,7 +1,9 @@
 package com.snapp.khabar.feature_fetch_news.di
 
+import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.Module
@@ -39,6 +41,14 @@ object FirebaseModule {
     ): StorageReference {
         return firebaseStorage.reference
     }
+
+
+    @Provides
+    @Singleton
+    fun provideQueryNewsByName() = FirebaseFirestore.getInstance()
+        .collection("AllNews")
+        .orderBy("publishedAt",Query.Direction.DESCENDING)
+        .limit(10.toLong())
 
 
 

@@ -6,21 +6,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.snapp.khabar.R
 import com.snapp.khabar.databinding.FragmentAllNewsBinding
 import com.snapp.khabar.feature_fetch_news.domain.util.Result
 import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.BaseFragment
 import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.home_fragment.fragments.all_news.adapters.HeadlineAdapter
+import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.home_fragment.fragments.all_news.adapters.NewsPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class AllNewsFragment : BaseFragment(1) {
 
     lateinit var headlineAdapter: HeadlineAdapter
+    private lateinit var allNewsAdapter: NewsPagingAdapter
 
     private var _binding: FragmentAllNewsBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: AllNewsViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -31,22 +38,38 @@ class AllNewsFragment : BaseFragment(1) {
 
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_news, container, false)
 
+        allNewsAdapter = NewsPagingAdapter(1){
+
+        }
+
         setupHeadlinesRecyclerView()
 
         setupNewsRecyclerView()
 
-
+        consumeFlows()
         return binding.root
 
     }
 
+    private fun consumeFlows(){
+        lifecycleScope.launchWhenStarted {
+            viewModel.allNewsFlow.collect {
+                binding.shimmerLayout.visibility = View.GONE
+                binding.contentLayout.visibility = View.VISIBLE
+                allNewsAdapter.submitData(it)
+
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-        observeNews(
-            homeViewModel.allNewsLiveData,
-            binding.shimmerLayout,
-            binding.contentLayout
-        )
+//        observeNews(
+//            homeViewModel.allNewsLiveData,
+//            binding.shimmerLayout,
+//            binding.contentLayout
+//        )
+
         observeHeadlines()
     }
 
@@ -91,7 +114,7 @@ class AllNewsFragment : BaseFragment(1) {
 
         binding.rvNews.apply {
             isNestedScrollingEnabled = false
-            adapter = newsAdapter
+            adapter = allNewsAdapter
             layoutManager = LinearLayoutManager(context)
         }
 

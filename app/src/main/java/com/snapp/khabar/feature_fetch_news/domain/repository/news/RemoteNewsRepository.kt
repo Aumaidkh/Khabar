@@ -1,5 +1,6 @@
 package com.snapp.khabar.feature_fetch_news.domain.repository.news
 
+import androidx.paging.PagingData
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.ArticleDto
 import com.snapp.khabar.feature_fetch_news.data.util.Constants.SEARCH_BY_TITLE
 
@@ -20,4 +21,6 @@ interface RemoteNewsRepository {
      * @return list of articles
      * */
     suspend fun searchNewsBy(searchBy: String = SEARCH_BY_TITLE, query: String): List<ArticleDto>
+
+
 }
