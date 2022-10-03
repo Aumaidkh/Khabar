@@ -24,6 +24,7 @@ import com.snapp.khabar.feature_fetch_news.presentation.ui.home.fragments.search
 import com.snapp.khabar.feature_fetch_news.presentation.util.getFormattedTime
 import com.snapp.khabar.feature_fetch_news.presentation.util.showShareIntent
 
+private const val TAG = "NewsPagingAdapter"
 class NewsPagingAdapter(
     val adapterParent: Int,
     val onBookmarkClick: (articleModel: ArticleModel) -> Unit
@@ -40,6 +41,7 @@ class NewsPagingAdapter(
 
 
         fun bind(news : ArticleModel){
+            Log.d(TAG, "Binding Item...")
             heading.text = news.heading
             desc.text = news.desc
             time.text = news.time!!.getFormattedTime()

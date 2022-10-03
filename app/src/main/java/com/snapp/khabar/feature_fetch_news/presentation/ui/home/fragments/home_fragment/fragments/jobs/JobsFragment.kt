@@ -30,8 +30,8 @@ class JobsFragment: BaseFragment(1) {
 
     override fun onResume() {
         super.onResume()
-        observeNews(
-            homeViewModel.businessNewsLiveData,
+        observeNewsPages(
+            newsViewModel.jobs,
             binding.shimmerJobsLayout,
             binding.contentLayout
         )

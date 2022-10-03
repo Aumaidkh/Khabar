@@ -31,8 +31,8 @@ class PoliticsFragment: BaseFragment(1) {
 
     override fun onResume() {
         super.onResume()
-        observeNews(
-            homeViewModel.politicsNewsLiveData,
+        observeNewsPages(
+            newsViewModel.politics,
             binding.shimmerPoliticsLayout,
             binding.contentLayout
         )

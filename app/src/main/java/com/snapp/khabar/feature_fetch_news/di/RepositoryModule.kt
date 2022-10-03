@@ -3,7 +3,9 @@ package com.snapp.khabar.feature_fetch_news.di
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.StorageReference
+import com.snapp.khabar.feature_fetch_news.data.remote.FirebaseArticleQuery
 import com.snapp.khabar.feature_fetch_news.data.repository.auth.AuthRepositoryImpl
 import com.snapp.khabar.feature_fetch_news.data.repository.auth.EmailAndPasswordAuthImpl
 import com.snapp.khabar.feature_fetch_news.data.repository.news.FirebaseFirestoreCommentsRepositoryImpl
@@ -41,8 +43,11 @@ object RepositoryModule {
     // Provide Remote Repository
     @Provides
     @Singleton
-    fun providesRemoteRepository(firestore: FirebaseFirestore): RemoteNewsRepository {
-        return FirebaseFirestoreRepositoryImpl(firestore)
+    fun providesRemoteRepository(
+        firestore: FirebaseFirestore,
+        query: FirebaseArticleQuery
+    ): RemoteNewsRepository {
+        return FirebaseFirestoreRepositoryImpl(firestore,query)
     }
 
     @Provides

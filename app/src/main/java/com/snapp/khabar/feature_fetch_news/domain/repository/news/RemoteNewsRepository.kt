@@ -1,8 +1,11 @@
 package com.snapp.khabar.feature_fetch_news.domain.repository.news
 
 import androidx.paging.PagingData
+import com.snapp.khabar.feature_fetch_news.data.remote.FirebaseArticleQuery
 import com.snapp.khabar.feature_fetch_news.data.remote.dto.ArticleDto
 import com.snapp.khabar.feature_fetch_news.data.util.Constants.SEARCH_BY_TITLE
+import com.snapp.khabar.feature_fetch_news.domain.model.ArticleModel
+import kotlinx.coroutines.flow.Flow
 
 interface RemoteNewsRepository {
 
@@ -22,5 +25,13 @@ interface RemoteNewsRepository {
      * */
     suspend fun searchNewsBy(searchBy: String = SEARCH_BY_TITLE, query: String): List<ArticleDto>
 
+    /**
+     * Fetches News By Category in terms of pages
+     * */
+    fun fetchNewsInPages(
+        query: String,
+        value: String,
+        filter: Boolean
 
+    ): Flow<PagingData<ArticleModel>>
 }

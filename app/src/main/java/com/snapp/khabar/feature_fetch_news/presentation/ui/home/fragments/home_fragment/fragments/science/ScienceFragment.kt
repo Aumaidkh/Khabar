@@ -29,8 +29,8 @@ class ScienceFragment : BaseFragment(1) {
 
     override fun onResume() {
         super.onResume()
-        observeNews(
-            homeViewModel.scienceNewsLiveData,
+        observeNewsPages(
+            newsViewModel.science,
             binding.shimmerScienceLayout,
             binding.contentLayout
         )

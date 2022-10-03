@@ -13,6 +13,8 @@ object Constants {
     const val SCIENCE = "science"
     const val SPORTS = "sports"
 
+    const val CATEGORY = "category"
+
     const val ALL_NEWS_CATEGORY = "AllNews"
     const val TECH_CATEGORY = "Tech"
     const val POLITICS_CATEGORY = "Politics"

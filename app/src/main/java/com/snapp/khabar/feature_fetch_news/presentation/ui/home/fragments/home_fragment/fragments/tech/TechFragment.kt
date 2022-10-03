@@ -31,8 +31,8 @@ class TechFragment: BaseFragment(1) {
 
     override fun onResume() {
         super.onResume()
-        observeNews(
-            homeViewModel.techNewsLiveData,
+        observeNewsPages(
+            newsViewModel.tech,
             binding.shimmerTechLayout,
             binding.contentLayout
         )

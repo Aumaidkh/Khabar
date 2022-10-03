@@ -107,7 +107,7 @@ class SearchFragment : BaseFragment(2) {
                         errorLayout.visibility = View.GONE
                         rvNews.visibility = View.VISIBLE
                     }
-                    newsAdapter.submitData(state.searchResults)
+                   // newsAdapter.submitData(state.searchResults)
                 }
             }
         }

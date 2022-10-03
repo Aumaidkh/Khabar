@@ -27,7 +27,7 @@ class AllNewsFragment : BaseFragment(1) {
     private var _binding: FragmentAllNewsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AllNewsViewModel by viewModels()
+    private val viewModel: NewsViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -52,23 +52,23 @@ class AllNewsFragment : BaseFragment(1) {
     }
 
     private fun consumeFlows(){
-        lifecycleScope.launchWhenStarted {
-            viewModel.allNewsFlow.collect {
-                binding.shimmerLayout.visibility = View.GONE
-                binding.contentLayout.visibility = View.VISIBLE
-                allNewsAdapter.submitData(it)
-
-            }
-        }
+//        lifecycleScope.launchWhenStarted {
+//            viewModel.allNewsFlow.collect {
+//                binding.shimmerLayout.visibility = View.GONE
+//                binding.contentLayout.visibility = View.VISIBLE
+//                allNewsAdapter.submitData(it)
+//
+//            }
+//        }
     }
 
     override fun onResume() {
         super.onResume()
-//        observeNews(
-//            homeViewModel.allNewsLiveData,
-//            binding.shimmerLayout,
-//            binding.contentLayout
-//        )
+        observeNewsPages(
+            newsViewModel.news,
+            binding.shimmerLayout,
+            binding.contentLayout
+        )
 
         observeHeadlines()
     }

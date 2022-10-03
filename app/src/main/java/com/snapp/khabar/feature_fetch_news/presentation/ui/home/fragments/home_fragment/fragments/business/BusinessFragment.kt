@@ -32,8 +32,8 @@ class BusinessFragment : BaseFragment(1) {
 
     override fun onResume() {
         super.onResume()
-        observeNews(
-            homeViewModel.businessNewsLiveData,
+        observeNewsPages(
+            newsViewModel.business,
             binding.shimmerBusinessLayout,
             binding.contentLayout
         )

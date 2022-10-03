@@ -75,4 +75,10 @@ object NewsUseCasesModule {
     fun provideHeadlinesUseCase(repository: RemoteNewsRepository): FetchHeadlinesUseCase {
         return FetchHeadlinesUseCase(repository)
     }
+
+    @Provides
+    @Singleton
+    fun provideFetchNewsPagesUseCase(repository: RemoteNewsRepository): FetchNewsPagesUseCase {
+        return FetchNewsPagesUseCase(repository)
+    }
 }

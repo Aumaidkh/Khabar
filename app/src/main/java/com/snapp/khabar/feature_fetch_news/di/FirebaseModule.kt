@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.snapp.khabar.feature_fetch_news.data.remote.FirebaseArticleQuery
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,12 +44,24 @@ object FirebaseModule {
     }
 
 
+    /**
+     * Firebase Queries
+     * */
     @Provides
     @Singleton
     fun provideQueryNewsByName() = FirebaseFirestore.getInstance()
         .collection("AllNews")
         .orderBy("publishedAt",Query.Direction.DESCENDING)
         .limit(10.toLong())
+
+
+    @Provides
+    @Singleton
+    fun provideQueryCategory(
+        firestore: FirebaseFirestore
+    ) = FirebaseArticleQuery(
+        firestore = firestore
+    )
 
 
 
