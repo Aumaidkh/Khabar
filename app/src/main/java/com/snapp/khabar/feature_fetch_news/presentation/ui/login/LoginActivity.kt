@@ -66,11 +66,9 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /**
-         * Check if user is already logged in
-         * */
-        loginViewModel.onEvent(LoginEvents.CheckIfUserIsAlreadyAuthenticated)
-        setTheme(R.style.splashScreenTheme)
+
+
+       // setTheme(R.style.splashScreenTheme)
         _binding = DataBindingUtil.setContentView(this,R.layout.activity_login)
 
         initSignInButton()
@@ -120,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
             loginViewModel.eventFlow.collect{ event ->
                 when(event){
                     is LoginUiEvents.ShowSnackBar -> {
-                        Log.d(TAG, "consumeFlows: Show Snackbar")
+                        Log.d(TAG, "consumeFlows: Show Snack bar")
                         Snackbar.make(binding.root,event.message,Snackbar.LENGTH_SHORT).show()
                     }
                 }

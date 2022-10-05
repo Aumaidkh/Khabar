@@ -17,6 +17,10 @@
             android:exported="false"
             android:theme="@style/Theme.Khabar" />
         <activity
+            android:name=".feature_fetch_news.presentation.ui.login.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Khabar" />
+        <activity
             android:name=".feature_fetch_news.presentation.ui.comment.CommentsActivity"
             android:theme="@style/Theme.Khabar" />
         <activity
@@ -29,7 +33,7 @@
             android:name=".feature_fetch_news.presentation.ui.edit_account.EditAccountActivity"
             android:theme="@style/Theme.Khabar" />
         <activity
-            android:name=".feature_fetch_news.presentation.ui.login.LoginActivity"
+            android:name=".feature_fetch_news.presentation.ui.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
