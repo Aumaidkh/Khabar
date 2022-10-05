@@ -42,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        Log.d(TAG, "onResume: ")
         collectFlows()
     }
 

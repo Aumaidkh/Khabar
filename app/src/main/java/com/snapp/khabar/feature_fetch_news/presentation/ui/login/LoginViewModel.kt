@@ -142,28 +142,25 @@ class LoginViewModel @Inject constructor(
                         _state.update {
                             it.copy(isLoading = true, isAuthenticated = false)
                         }
-                        Log.d(TAG, "ifUserAlreadyAuthenticated: Loading")
                     }
 
                     is Result.Success -> {
                         _state.update {
                             it.copy(
-                                isLoading = false,
-                                isAuthenticated = result.data ?: false
+                                isLoading = false
                             )
                         }
-                        Log.d(TAG, "ifUserAlreadyAuthenticated: Success")
+                        _eventFlow.emit(LoginUiEvents.UserAuthenticated)
                     }
 
                     is Result.Error -> {
                         _state.update {
                             it.copy(
-                                isLoading = false,
-                                isAuthenticated = false
+                                isLoading = false
                             )
                         }
 
-                        Log.d(TAG, "ifUserAlreadyAuthenticated: Error")
+                        _eventFlow.emit(LoginUiEvents.UserNotAuthenticated)
 
                         _eventFlow.emit(LoginUiEvents.ShowSnackBar(result.message.toString()))
                     }

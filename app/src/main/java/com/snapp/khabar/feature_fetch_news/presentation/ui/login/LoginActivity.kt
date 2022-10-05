@@ -150,7 +150,7 @@ class LoginActivity : AppCompatActivity() {
         /**
          * Settings view model events
          * */
-        lifecycleScope.launchWhenStarted {
+       /* lifecycleScope.launchWhenStarted {
             settingsViewModel.eventFlow.collect { event ->
                 when(event){
                     is SettingsUiEvent.DarkModeToggle -> {
@@ -158,7 +158,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
+        }*/
     }
 
     override fun onResume() {
@@ -166,7 +166,7 @@ class LoginActivity : AppCompatActivity() {
         /**
          * Check if DarkMode is Enabled
          * */
-        settingsViewModel.onEvent(SettingsScreenEvent.IsDarkModeEnabled)
+       // settingsViewModel.onEvent(SettingsScreenEvent.IsDarkModeEnabled)
         consumeFlows()
     }
 
